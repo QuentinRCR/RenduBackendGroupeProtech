@@ -22,8 +22,19 @@ public class CreneauxController {
         return creneauxDAO.findAll().stream().map(CreneauxDTO::new).collect(Collectors.toList());
     }
 
-    @PostMapping // (8)
-    public CreneauxDTO create(@RequestBody CreneauxDTO dto) {
+    @GetMapping(path = "/{id}")
+    public CreneauxDTO findById(@PathVariable Long id) {
+        return creneauxDAO.findById(id).map(CreneauxDTO::new).orElse(null);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public void delete(@PathVariable Long id) {
+        creneauxDAO.deleteById(id);
+    }
+
+
+    @PostMapping("/create_or_modify") // (8)
+    public CreneauxDTO create_or_modify(@RequestBody CreneauxDTO dto) {
         Creneaux creneaux = null;
         // On creation id is not defined
         if (dto.getId() == null) {
@@ -36,7 +47,9 @@ public class CreneauxController {
             creneaux.setJours(dto.getJours());
             creneaux.setTimeDebut(dto.getTimeDebut());
             creneaux.setTimeFin(dto.getTimeFin());
+
         }
         return new CreneauxDTO(creneaux);
     }
+
 }

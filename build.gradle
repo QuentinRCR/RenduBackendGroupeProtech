@@ -21,6 +21,10 @@ dependencies {
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 	//implementation("org.springframework.boot:spring-boot-starter-security")
 	//testImplementation("org.springframework.security:spring-security-test")
+
+	// Pour avoir une database mysql
+	//implementation group: 'mysql', name: 'mysql-connector-java', version: '5.1.13'
+
 }
 
 tasks.named('test') {
