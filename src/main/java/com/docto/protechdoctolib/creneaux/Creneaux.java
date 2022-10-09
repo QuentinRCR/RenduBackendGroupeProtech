@@ -1,5 +1,7 @@
 package com.docto.protechdoctolib.creneaux;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.util.Date;
@@ -7,6 +9,18 @@ import java.util.List;
 
 @Entity
 public class Creneaux {
+
+    public Creneaux() {
+    }
+
+    public Creneaux(Long id, Date dateDebut, Date dateFin, List<DayOfWeek> jours, Date timeDebut, Date timeFin) {
+        this.id = id;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+        this.jours = jours;
+        TimeDebut = timeDebut;
+        TimeFin = timeFin;
+    }
 
     /**
      * Id du créneau
@@ -19,31 +33,37 @@ public class Creneaux {
      * Premier jour de la plage de temps
      */
     @Column
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
      private Date dateDebut;
 
     /**
      * Dernier jour de la plage de temps
      */
     @Column
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
      private Date dateFin;
 
     /**
      * Liste des jours pour lequels on peut prendre des rendez-vous
      */
+
+    @ElementCollection(targetClass=DayOfWeek.class)
+    @Enumerated(EnumType.STRING)
     @Column
-    @ElementCollection(targetClass=String.class)
     private List<DayOfWeek> jours;
 
     /**
      * Heure de début de la plage de prise de rendez-vous pour la journéé
      */
     @Column
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
     private Date TimeDebut;
 
     /**
      * Heure de fin de la plage de prise de rendez-vous pour la journéé
      */
     @Column
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
     private Date TimeFin;
 
 
