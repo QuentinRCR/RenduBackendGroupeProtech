@@ -3,6 +3,8 @@ package com.docto.protechdoctolib.creneaux;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.time.DayOfWeek;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,6 +52,20 @@ public class CreneauxController {
 
         }
         return new CreneauxDTO(creneaux);
+    }
+
+    @PostMapping("/isWithinASlot")
+    public CreneauxDTO isWithinASlot(@RequestBody DateDTO dateeRDV){
+        Date dateRDV = dateeRDV.getDate();
+        CreneauxDTO bonCreneau=null;
+        List<Creneaux> tousLesCreneaux=creneauxDAO.findAll();
+        for (Creneaux creneau : tousLesCreneaux){
+            if ((dateRDV.before(creneau.getDateFin()) & (dateRDV.after(creneau.getDateDebut())))& ((dateRDV.getTime()<=creneau.getTimeFin().getTime()) & (dateRDV.getTime()>=creneau.getTimeDebut().getTime())&(creneau.getJours().contains(DayOfWeek.of(dateRDV.getDay()))))){
+                //il faut ajouter le check du jour
+                bonCreneau=new CreneauxDTO(creneau);
+            }
+        }
+        return bonCreneau;
     }
 
 }
