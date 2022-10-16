@@ -18,8 +18,8 @@ public class Creneaux {
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.jours = jours;
-        TimeDebut = timeDebut;
-        TimeFin = timeFin;
+        this.timeDebut = timeDebut;
+        this.timeFin = timeFin;
     }
 
     /**
@@ -57,14 +57,14 @@ public class Creneaux {
      */
     @Column
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
-    private Date TimeDebut;
+    private Date timeDebut;
 
     /**
      * Heure de fin de la plage de prise de rendez-vous pour la journéé
      */
     @Column
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
-    private Date TimeFin;
+    private Date timeFin;
 
 
     public Long getId() {
@@ -76,7 +76,7 @@ public class Creneaux {
     }
 
     public Date getDateDebut() {
-        return dateDebut;
+        return new Date(dateDebut.getTime());
     }
 
     public void setDateDebut(Date dateDebut) {
@@ -84,7 +84,7 @@ public class Creneaux {
     }
 
     public Date getDateFin() {
-        return dateFin;
+        return new Date(dateFin.getTime());
     }
 
     public void setDateFin(Date dateFin) {
@@ -100,18 +100,18 @@ public class Creneaux {
     }
 
     public Date getTimeDebut() {
-        return TimeDebut;
+        return new Date(timeDebut.getTime());
     }
 
     public void setTimeDebut(Date timeDebut) {
-        TimeDebut = timeDebut;
+        timeDebut = timeDebut;
     }
 
     public Date getTimeFin() {
-        return TimeFin;
+        return new Date( timeFin.getTime());
     }
 
     public void setTimeFin(Date timeFin) {
-        TimeFin = timeFin;
+        timeFin = timeFin;
     }
 }

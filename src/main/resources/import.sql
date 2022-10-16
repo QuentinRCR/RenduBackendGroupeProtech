@@ -1,0 +1,7 @@
+INSERT INTO CRENEAUX(id,date_Debut, date_Fin, Time_Debut,Time_Fin) VALUES(1,{ts '2022-10-16 00:00:00.00'}, {ts '2022-10-18 00:00:00.00'}, {ts '1990-01-01 08:30:00.00'},{ts '1990-01-01 18:30:00.00'});
+INSERT INTO CRENEAUX_JOURS(creneaux_id,jours) VALUES(1,'MONDAY')
+INSERT INTO CRENEAUX_JOURS(creneaux_id,jours) VALUES(1,'FRIDAY')
+
+INSERT INTO CRENEAUX(id,date_Debut, date_Fin, Time_Debut,Time_Fin) VALUES(2,{ts '2022-10-20 00:00:00.00'}, {ts '2022-10-22 00:00:00.00'}, {ts '1990-01-01 09:00:00.00'},{ts '1990-01-01 18:00:00.00'});
+INSERT INTO CRENEAUX_JOURS(creneaux_id,jours) VALUES(2,'MONDAY')
+INSERT INTO CRENEAUX_JOURS(creneaux_id,jours) VALUES(2,'TUESDAY')
