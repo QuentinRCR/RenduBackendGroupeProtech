@@ -19,22 +19,40 @@ public class CreneauxController {
         this.creneauxDAO = creneauxDAO;
     }
 
+    /**
+     * Donne la liste de tous les créneaux
+     * @return une liste de tous les créneaux
+     */
     @GetMapping
     public List<CreneauxDTO> findAll(){
         return creneauxDAO.findAll().stream().map(CreneauxDTO::new).collect(Collectors.toList());
     }
 
+    /**
+     * Renvoit le créneau ayant pour id le paramètre
+     * @param id
+     * @return creneau
+     */
     @GetMapping(path = "/{id}")
     public CreneauxDTO findById(@PathVariable Long id) {
         return creneauxDAO.findById(id).map(CreneauxDTO::new).orElse(null);
     }
 
+    /**
+     * Supprime le créneau ayant pour id le paramètre
+     * @param id
+     */
     @DeleteMapping(path = "/{id}")
     public void deleteParId(@PathVariable Long id) {
         creneauxDAO.deleteById(id);
     }
 
 
+    /**
+     * Prend un dto de créneau en paramètre, crée ce creneau dans la db si son id est null et le modifie si son id existe déjà
+     * @param dto
+     * @return le dto du créneau crée
+     */
     @PostMapping("/create_or_modify") // (8)
     public CreneauxDTO create_or_modify(@RequestBody CreneauxDTO dto) {
         Creneaux creneaux = null;
@@ -54,6 +72,11 @@ public class CreneauxController {
         return new CreneauxDTO(creneaux);
     }
 
+    /**
+     * Prend un date de rendez-vous en paramètre et renvoit l'id du créneau correspondant s'il existe et null sinon
+     * @param dateeRDV
+     * @return id du créneau corespondant et null sinon
+     */
     @PostMapping("/isWithinASlot")
     public CreneauxDTO isWithinASlot(@RequestBody DateDTO dateeRDV){
         Date dateRDV = dateeRDV.getDate();

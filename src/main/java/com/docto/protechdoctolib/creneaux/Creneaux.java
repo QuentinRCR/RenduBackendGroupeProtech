@@ -53,14 +53,14 @@ public class Creneaux {
     private List<DayOfWeek> jours;
 
     /**
-     * Heure de début de la plage de prise de rendez-vous pour la journéé
+     * Heure de début de la plage de prise de rendez-vous pour la journée
      */
     @Column
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
     private Date timeDebut;
 
     /**
-     * Heure de fin de la plage de prise de rendez-vous pour la journéé
+     * Heure de fin de la plage de prise de rendez-vous pour la journée
      */
     @Column
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")

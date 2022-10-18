@@ -2,6 +2,9 @@ package com.docto.protechdoctolib.creneaux;
 
 import java.util.Date;
 
+/**
+ * Permet de pouvoir passer des dates en paramètre dans l'API
+ */
 public class DateDTO{
 
     private Date date;

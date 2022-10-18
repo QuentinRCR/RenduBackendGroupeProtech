@@ -22,6 +22,9 @@ public class CreneauxDAOtest {
     @Autowired
     private CreneauxDAO creneauxDAO;
 
+    /**
+     * Teste si le créneaux 1 contient bien les bonnes informations
+      */
     @Test
     public void shouldFindACreaneau() {
         Creneaux creneaux = creneauxDAO.getReferenceById(1L);
@@ -34,12 +37,18 @@ public class CreneauxDAOtest {
         Assertions.assertThat(creneaux.getTimeDebut()).isEqualTo(creneauTest.getTimeDebut());
     }
 
+    /**
+     * Teste si la liste de créneaux retourné a bien une taille de 2
+     */
     @Test
     public void shouldFind2Creneaux() {
         List<Creneaux> creneaux = creneauxDAO.findAll();
         Assertions.assertThat(creneaux.size()).isEqualTo(2);
     }
 
+    /**
+     * Teste si ça supprime bien le créneaux ayant pour id 1
+     */
     @Test
     public void shouldDeleteCreneaux(){
         creneauxDAO.deleteById(1L);
@@ -48,6 +57,9 @@ public class CreneauxDAOtest {
         Assertions.assertThat(creneaux.get(0).getId()).isEqualTo(2);
     }
 
+    /**
+     * Teste si ça crée un nouveau créneau
+     */
     @Test
     public void shouldCreateANewCreneau(){
         creneauxDAO.save(new Creneaux(3L,new Date(),new Date(),new ArrayList<DayOfWeek>(),new Date(),new Date()));
@@ -55,6 +67,9 @@ public class CreneauxDAOtest {
         Assertions.assertThat(creneau).isInstanceOf(Creneaux.class);
     }
 
+    /**
+     * Teste si ça modifie bien le temps de fin du créneau ayant l'id 1
+     */
     @Test
     public void shoudModifyCreneau1(){
         Creneaux creneaux = creneauxDAO.getReferenceById(1L);
