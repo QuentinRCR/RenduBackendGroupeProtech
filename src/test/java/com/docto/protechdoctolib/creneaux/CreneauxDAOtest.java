@@ -34,17 +34,32 @@ public class CreneauxDAOtest {
         Assertions.assertThat(creneaux.getTimeDebut()).isEqualTo(creneauTest.getTimeDebut());
     }
 
-}/*
     @Test
-    public void shouldDeleteWindowsRoom() {
-        Room room = roomDao.getReferenceById(-10L);
-        List<Long> roomIds = room.getHeaters().stream().map(Heater::getId).collect(Collectors.toList());
-        Assertions.assertThat(roomIds.size()).isEqualTo(2);
+    public void shouldFind2Creneaux() {
+        List<Creneaux> creneaux = creneauxDAO.findAll();
+        Assertions.assertThat(creneaux.size()).isEqualTo(2);
+    }
 
-        heaterDao.deleteByRoomId(-10L);
-        List<Heater> result = heaterDao.findAllById(roomIds);
-        Assertions.assertThat(result).isEmpty();
+    @Test
+    public void shouldDeleteCreneaux(){
+        creneauxDAO.deleteById(1L);
+        List<Creneaux> creneaux = creneauxDAO.findAll();
+        Assertions.assertThat(creneaux.size()).isEqualTo(1);
+        Assertions.assertThat(creneaux.get(0).getId()).isEqualTo(2);
+    }
 
+    @Test
+    public void shouldCreateANewCreneau(){
+        creneauxDAO.save(new Creneaux(3L,new Date(),new Date(),new ArrayList<DayOfWeek>(),new Date(),new Date()));
+        Creneaux creneau = creneauxDAO.getReferenceById(3L);
+        Assertions.assertThat(creneau).isInstanceOf(Creneaux.class);
+    }
+
+    @Test
+    public void shoudModifyCreneau1(){
+        Creneaux creneaux = creneauxDAO.getReferenceById(1L);
+        creneaux.setTimeFin(new Date(2695,12,30));
+        Creneaux creneaux1 = creneauxDAO.getReferenceById(1L);
+        Assertions.assertThat(creneaux1.getTimeFin()).isEqualTo(new Date(2695,12,30));
     }
 }
-*/

@@ -30,7 +30,7 @@ public class CreneauxController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public void delete(@PathVariable Long id) {
+    public void deleteParId(@PathVariable Long id) {
         creneauxDAO.deleteById(id);
     }
 

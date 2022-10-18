@@ -104,7 +104,7 @@ public class Creneaux {
     }
 
     public void setTimeDebut(Date timeDebut) {
-        timeDebut = timeDebut;
+        this.timeDebut = timeDebut;
     }
 
     public Date getTimeFin() {
@@ -112,6 +112,6 @@ public class Creneaux {
     }
 
     public void setTimeFin(Date timeFin) {
-        timeFin = timeFin;
+        this.timeFin = timeFin;
     }
 }
