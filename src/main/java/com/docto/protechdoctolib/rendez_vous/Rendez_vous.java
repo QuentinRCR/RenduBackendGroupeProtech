@@ -32,22 +32,25 @@ public class Rendez_vous {
     /**
      * Id de l'utilisateur qui prend le rdv
      */
+    @Column
     private Long idUser;
 
     /**
      * Id du creneau qui contient le rdv
      */
+    @Column
     private long idCreneau;
 
     /**
      * Durée du rdv
      */
-
+    @Column
     private Duration duree;
 
     /**
      * Moyen de communication choisi
      */
+    @Column
     private String moyenCommunication;
 
     /**
@@ -60,6 +63,7 @@ public class Rendez_vous {
     /**
      * lien zoom du rdv
      */
+    @Column
     private String zoomLink;
 
     /**
