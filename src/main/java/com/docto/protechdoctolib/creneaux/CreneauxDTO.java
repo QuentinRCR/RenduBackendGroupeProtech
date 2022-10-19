@@ -1,22 +1,22 @@
 package com.docto.protechdoctolib.creneaux;
 
 import java.time.DayOfWeek;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class CreneauxDTO {
 
     private Long id;
 
-    private Date dateDebut;
+    private GregorianCalendar dateDebut;
 
-    private Date dateFin;
+    private GregorianCalendar dateFin;
 
     private List<DayOfWeek> jours;
 
-    private Date TimeDebut;
+    private GregorianCalendar timeDebut;
 
-    private Date TimeFin;
+    private GregorianCalendar timeFin;
 
     //Ce constructeur est necessaire à spring
     public CreneauxDTO() {
@@ -27,8 +27,8 @@ public class CreneauxDTO {
         this.dateDebut = creneaux.getDateDebut();
         this.dateFin = creneaux.getDateDebut();
         this.jours = creneaux.getJours();
-        this.TimeDebut = creneaux.getTimeDebut();
-        this.TimeFin = creneaux.getTimeFin();
+        this.timeDebut = creneaux.getTimeDebut();
+        this.timeFin = creneaux.getTimeFin();
     }
 
     public Long getId() {
@@ -39,19 +39,19 @@ public class CreneauxDTO {
         this.id = id;
     }
 
-    public Date getDateDebut() {
+    public GregorianCalendar getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(Date dateDebut) {
+    public void setDateDebut(GregorianCalendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public Date getDateFin() {
+    public GregorianCalendar getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(Date dateFin) {
+    public void setDateFin(GregorianCalendar dateFin) {
         this.dateFin = dateFin;
     }
 
@@ -63,19 +63,19 @@ public class CreneauxDTO {
         this.jours = jours;
     }
 
-    public Date getTimeDebut() {
-        return TimeDebut;
+    public GregorianCalendar getTimeDebut() {
+        return this.timeDebut;
     }
 
-    public void setTimeDebut(Date timeDebut) {
-        TimeDebut = timeDebut;
+    public void setTimeDebut(GregorianCalendar timeDebut) {
+        this.timeDebut = timeDebut;
     }
 
-    public Date getTimeFin() {
-        return TimeFin;
+    public GregorianCalendar getTimeFin() {
+        return timeFin;
     }
 
-    public void setTimeFin(Date timeFin) {
-        TimeFin = timeFin;
+    public void setTimeFin(GregorianCalendar timeFin) {
+        this.timeFin = timeFin;
     }
 }

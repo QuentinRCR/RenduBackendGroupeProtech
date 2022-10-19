@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.time.DayOfWeek;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,7 +58,7 @@ public class CreneauxController {
         Creneaux creneaux = null;
         // On creation id is not defined
         if (dto.getId() == null) {
-            creneaux = creneauxDAO.save(new Creneaux(dto.getId(),dto.getDateDebut(),dto.getDateFin(),dto.getJours(),dto.getTimeDebut(),dto.getTimeFin()));
+            creneaux = creneauxDAO.save(new Creneaux(null,dto.getDateDebut(),dto.getDateFin(),dto.getJours(),dto.getTimeDebut(),dto.getTimeFin()));
         }
         else {
             creneaux = creneauxDAO.getReferenceById( dto.getId());  // (9)
@@ -73,13 +73,13 @@ public class CreneauxController {
     }
 
     /**
-     * Prend un date de rendez-vous en paramètre et renvoit l'id du créneau correspondant s'il existe et null sinon
+     * Prend un GregorianCalendar de rendez-vous en paramètre et renvoit l'id du créneau correspondant s'il existe et null sinon
      * @param dateeRDV
      * @return id du créneau corespondant et null sinon
      */
-    @PostMapping("/isWithinASlot")
+    /*@PostMapping("/isWithinASlot")
     public CreneauxDTO isWithinASlot(@RequestBody DateDTO dateeRDV){
-        Date dateRDV = dateeRDV.getDate();
+        GregorianCalendar dateRDV = dateeRDV.getDate();
         CreneauxDTO bonCreneau=null;
         List<Creneaux> tousLesCreneaux=creneauxDAO.findAll();
         for (Creneaux creneau : tousLesCreneaux){
@@ -89,6 +89,6 @@ public class CreneauxController {
             }
         }
         return bonCreneau;
-    }
+    }*/
 
 }

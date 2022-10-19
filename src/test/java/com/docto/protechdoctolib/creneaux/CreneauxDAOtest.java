@@ -11,9 +11,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.DayOfWeek;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -27,9 +26,9 @@ public class CreneauxDAOtest {
       */
     @Test
     public void shouldFindACreaneau() {
-        Creneaux creneaux = creneauxDAO.getReferenceById(1L);
+        Creneaux creneaux = creneauxDAO.getReferenceById(1000L);
         List<DayOfWeek> listjours= List.of(DayOfWeek.MONDAY,DayOfWeek.FRIDAY);
-        Creneaux creneauTest = new Creneaux(1L, new Date(2022-1900,10-1,16) , new Date(2022-1900,10-1,18), listjours, new Date(90,01-1,01,8,30,00), new Date(90,01-1,01,18,30,00));
+        Creneaux creneauTest = new Creneaux(1L, new GregorianCalendar(2022,10-1,16) , new GregorianCalendar(2022,10-1,18), listjours, new GregorianCalendar(1990,01-1,01,8,30,00), new GregorianCalendar(1990,01-1,01,18,30,00));
         Assertions.assertThat(creneaux.getJours().get(0)).isEqualTo(creneauTest.getJours().get(0));
         Assertions.assertThat(creneaux.getDateDebut()).isEqualTo(creneauTest.getDateDebut());
         Assertions.assertThat(creneaux.getDateFin()).isEqualTo(creneauTest.getDateFin());
@@ -51,10 +50,10 @@ public class CreneauxDAOtest {
      */
     @Test
     public void shouldDeleteCreneaux(){
-        creneauxDAO.deleteById(1L);
+        creneauxDAO.deleteById(1000L);
         List<Creneaux> creneaux = creneauxDAO.findAll();
         Assertions.assertThat(creneaux.size()).isEqualTo(1);
-        Assertions.assertThat(creneaux.get(0).getId()).isEqualTo(2);
+        Assertions.assertThat(creneaux.get(0).getId()).isEqualTo(2000);
     }
 
     /**
@@ -62,7 +61,7 @@ public class CreneauxDAOtest {
      */
     @Test
     public void shouldCreateANewCreneau(){
-        creneauxDAO.save(new Creneaux(3L,new Date(),new Date(),new ArrayList<DayOfWeek>(),new Date(),new Date()));
+        creneauxDAO.save(new Creneaux(3L,new GregorianCalendar(),new GregorianCalendar(),new ArrayList<DayOfWeek>(),new GregorianCalendar(),new GregorianCalendar()));
         Creneaux creneau = creneauxDAO.getReferenceById(3L);
         Assertions.assertThat(creneau).isInstanceOf(Creneaux.class);
     }
@@ -72,9 +71,9 @@ public class CreneauxDAOtest {
      */
     @Test
     public void shoudModifyCreneau1(){
-        Creneaux creneaux = creneauxDAO.getReferenceById(1L);
-        creneaux.setTimeFin(new Date(2695,12,30));
-        Creneaux creneaux1 = creneauxDAO.getReferenceById(1L);
-        Assertions.assertThat(creneaux1.getTimeFin()).isEqualTo(new Date(2695,12,30));
+        Creneaux creneaux = creneauxDAO.getReferenceById(1000L);
+        creneaux.setTimeFin(new GregorianCalendar(2695,12,30));
+        Creneaux creneaux1 = creneauxDAO.getReferenceById(1000L);
+        Assertions.assertThat(creneaux1.getTimeFin()).isEqualTo(new GregorianCalendar(2695,12,30));
     }
 }

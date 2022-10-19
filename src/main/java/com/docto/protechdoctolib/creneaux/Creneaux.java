@@ -4,7 +4,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
-import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Entity
@@ -13,7 +14,7 @@ public class Creneaux {
     public Creneaux() {
     }
 
-    public Creneaux(Long id, Date dateDebut, Date dateFin, List<DayOfWeek> jours, Date timeDebut, Date timeFin) {
+    public Creneaux(Long id, GregorianCalendar dateDebut, GregorianCalendar dateFin, List<DayOfWeek> jours, GregorianCalendar timeDebut, GregorianCalendar timeFin) {
         this.id = id;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
@@ -33,15 +34,15 @@ public class Creneaux {
      * Premier jour de la plage de temps
      */
     @Column
-    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
-     private Date dateDebut;
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss[.SSS][.SS][.S]")
+     private GregorianCalendar dateDebut;
 
     /**
      * Dernier jour de la plage de temps
      */
     @Column
-    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
-     private Date dateFin;
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss[.SSS][.SS][.S]")
+     private GregorianCalendar dateFin;
 
     /**
      * Liste des jours pour lequels on peut prendre des rendez-vous
@@ -56,15 +57,15 @@ public class Creneaux {
      * Heure de début de la plage de prise de rendez-vous pour la journée
      */
     @Column
-    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
-    private Date timeDebut;
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss[.SSS][.SS][.S]")
+    private GregorianCalendar timeDebut;
 
     /**
      * Heure de fin de la plage de prise de rendez-vous pour la journée
      */
     @Column
-    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
-    private Date timeFin;
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss[.SSS][.SS][.S]")
+    private GregorianCalendar timeFin;
 
 
     public Long getId() {
@@ -75,19 +76,19 @@ public class Creneaux {
         this.id = id;
     }
 
-    public Date getDateDebut() {
-        return new Date(dateDebut.getTime());
+    public GregorianCalendar getDateDebut() {
+        return this.dateDebut;
     }
 
-    public void setDateDebut(Date dateDebut) {
+    public void setDateDebut(GregorianCalendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public Date getDateFin() {
-        return new Date(dateFin.getTime());
+    public GregorianCalendar getDateFin() {
+        return this.dateFin;
     }
 
-    public void setDateFin(Date dateFin) {
+    public void setDateFin(GregorianCalendar dateFin) {
         this.dateFin = dateFin;
     }
 
@@ -99,19 +100,19 @@ public class Creneaux {
         this.jours = jours;
     }
 
-    public Date getTimeDebut() {
-        return new Date(timeDebut.getTime());
+    public GregorianCalendar getTimeDebut() {
+        return this.timeDebut;
     }
 
-    public void setTimeDebut(Date timeDebut) {
+    public void setTimeDebut(GregorianCalendar timeDebut) {
         this.timeDebut = timeDebut;
     }
 
-    public Date getTimeFin() {
-        return new Date( timeFin.getTime());
+    public GregorianCalendar getTimeFin() {
+        return this.timeFin;
     }
 
-    public void setTimeFin(Date timeFin) {
+    public void setTimeFin(GregorianCalendar timeFin) {
         this.timeFin = timeFin;
     }
 }
