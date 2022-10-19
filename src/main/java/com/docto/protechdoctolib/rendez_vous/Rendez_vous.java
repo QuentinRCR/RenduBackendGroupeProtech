@@ -15,6 +15,7 @@ public class Rendez_vous {
     public Rendez_vous(Long id, Long idCreneau, Long idUser, GregorianCalendar dateDebut, Duration duree, String moyenCommunication, String zoomLink) {
         this.id = id;
         this.dateDebut = dateDebut;
+        this.idCreneau= idCreneau;
         this.idUser=idUser;
         this.duree=duree;
         this.moyenCommunication= moyenCommunication;

@@ -1,0 +1,96 @@
+package com.docto.protechdoctolib.rendez_vous;
+
+import java.time.DayOfWeek;
+import java.time.Duration;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+public class Rendez_vousDTO {
+
+    private Long id;
+
+    private Long idUser;
+
+    private Long idCreneau;
+
+    private String zoomLink;
+
+    private GregorianCalendar dateDebut;
+
+    private String moyenCommunication;
+
+    private Duration duree;
+
+
+    //Ce constructeur est necessaire à spring
+    public Rendez_vousDTO() {
+    }
+
+    public Rendez_vousDTO(Rendez_vous rendez_vous) {
+        this.id = rendez_vous.getId();
+        this.dateDebut = rendez_vous.getDateDebut();
+        this.idUser = rendez_vous.getIdUser();
+        this.dateDebut = getDateDebut();
+        this.idCreneau = rendez_vous.getIdCreneau();
+        this.duree = rendez_vous.getDuree();
+        this.moyenCommunication = rendez_vous.getMoyenCommunication();
+        this.zoomLink = zoomLink;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
+    }
+
+    public Long getIdCreneau() {
+        return idCreneau;
+    }
+
+    public void setIdCreneau(Long idCreneau) {
+        this.idCreneau = idCreneau;
+    }
+
+    public String getZoomLink() {
+        return zoomLink;
+    }
+
+    public void setZoomLink(String zoomLink) {
+        this.zoomLink = zoomLink;
+    }
+
+    public GregorianCalendar getDateDebut() {
+        return dateDebut;
+    }
+
+    public void setDateDebut(GregorianCalendar dateDebut) {
+        this.dateDebut = dateDebut;
+    }
+
+    public String getMoyenCommunication() {
+        return moyenCommunication;
+    }
+
+    public void setMoyenCommunication(String moyenCommunication) {
+        this.moyenCommunication = moyenCommunication;
+    }
+
+    public Duration getDuree() {
+        return duree;
+    }
+
+    public void setDuree(Duration duree) {
+        this.duree = duree;
+    }
+}
