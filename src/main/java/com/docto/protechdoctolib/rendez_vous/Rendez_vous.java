@@ -62,5 +62,64 @@ public class Rendez_vous {
      * lien zoom du rdv
      */
     private String zoomLink;
+
+    /**
+     * Getters et Setters
+     */
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
+    }
+
+    public long getIdCreneau() {
+        return idCreneau;
+    }
+
+    public void setIdCreneau(long idCreneau) {
+        this.idCreneau = idCreneau;
+    }
+
+    public Duration getDuree() {
+        return duree;
+    }
+
+    public void setDuree(Duration duree) {
+        this.duree = duree;
+    }
+
+    public String getMoyenCommunication() {
+        return moyenCommunication;
+    }
+
+    public void setMoyenCommunication(String moyenCommunication) {
+        this.moyenCommunication = moyenCommunication;
+    }
+
+    public Date getDateDebut() {
+        return dateDebut;
+    }
+
+    public void setDateDebut(Date dateDebut) {
+        this.dateDebut = dateDebut;
+    }
+
+    public String getZoomLink() {
+        return zoomLink;
+    }
+
+    public void setZoomLink(String zoomLink) {
+        this.zoomLink = zoomLink;
+    }
 }
 
