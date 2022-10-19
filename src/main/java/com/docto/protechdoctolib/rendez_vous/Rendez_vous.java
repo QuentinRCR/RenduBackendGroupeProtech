@@ -3,10 +3,8 @@ package com.docto.protechdoctolib.rendez_vous;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.DayOfWeek;
 import java.time.Duration;
-import java.util.Date;
-import java.util.List;
+import java.util.GregorianCalendar;
 
 @Entity
 public class Rendez_vous {
@@ -14,7 +12,7 @@ public class Rendez_vous {
     public Rendez_vous() {
     }
 
-    public Rendez_vous(Long id, Long idCreneau,Long idUser,Date dateDebut, Duration duree, String moyenCommunication,String zoomLink) {
+    public Rendez_vous(Long id, Long idCreneau, Long idUser, GregorianCalendar dateDebut, Duration duree, String moyenCommunication, String zoomLink) {
         this.id = id;
         this.dateDebut = dateDebut;
         this.idUser=idUser;
@@ -56,7 +54,7 @@ public class Rendez_vous {
      */
     @Column
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
-    private Date dateDebut;
+    private GregorianCalendar dateDebut;
 
     /**
      * lien zoom du rdv
@@ -106,11 +104,11 @@ public class Rendez_vous {
         this.moyenCommunication = moyenCommunication;
     }
 
-    public Date getDateDebut() {
+    public GregorianCalendar getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(Date dateDebut) {
+    public void setDateDebut(GregorianCalendar dateDebut) {
         this.dateDebut = dateDebut;
     }
 
