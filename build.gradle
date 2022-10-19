@@ -18,11 +18,16 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // libs to use JPA in your project
 	implementation 'com.h2database:h2' // libs to use a H2 database
-	//implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	testImplementation("org.springframework.security:spring-security-test")
+
+	// Pour avoir une database mysql
+	//implementation group: 'mysql', name: 'mysql-connector-java', version: '5.1.13'
+
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
