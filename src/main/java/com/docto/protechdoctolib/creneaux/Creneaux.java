@@ -1,10 +1,10 @@
 package com.docto.protechdoctolib.creneaux;
 
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
-import java.util.GregorianCalendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -14,13 +14,13 @@ public class Creneaux {
     public Creneaux() {
     }
 
-    public Creneaux(Long id, GregorianCalendar dateDebut, GregorianCalendar dateFin, List<DayOfWeek> jours, GregorianCalendar timeDebut, GregorianCalendar timeFin) {
+    public Creneaux(Long id, GregorianCalendar dateDebut, GregorianCalendar dateFin, List<DayOfWeek> jours, List<HeuresDebutFin> heuresDebutFin) {
         this.id = id;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.jours = jours;
-        this.timeDebut = timeDebut;
-        this.timeFin = timeFin;
+        this.heuresDebutFin = heuresDebutFin;
+
     }
 
     /**
@@ -53,20 +53,17 @@ public class Creneaux {
     @Column
     private List<DayOfWeek> jours;
 
-    /**
-     * Heure de début de la plage de prise de rendez-vous pour la journée
-     */
-    @Column
-    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss[.SSS][.SS][.S]")
-    private GregorianCalendar timeDebut;
+    @OneToMany(mappedBy = "idCreneaux")
+    private List<HeuresDebutFin> heuresDebutFin;
 
-    /**
-     * Heure de fin de la plage de prise de rendez-vous pour la journée
-     */
-    @Column
-    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss[.SSS][.SS][.S]")
-    private GregorianCalendar timeFin;
 
+    public List<HeuresDebutFin> getHeuresDebutFin() {
+        return heuresDebutFin;
+    }
+
+    public void setHeuresDebutFin(List<HeuresDebutFin> heuresDebutFin) {
+        this.heuresDebutFin = heuresDebutFin;
+    }
 
     public Long getId() {
         return id;
@@ -98,21 +95,5 @@ public class Creneaux {
 
     public void setJours(List<DayOfWeek> jours) {
         this.jours = jours;
-    }
-
-    public GregorianCalendar getTimeDebut() {
-        return this.timeDebut;
-    }
-
-    public void setTimeDebut(GregorianCalendar timeDebut) {
-        this.timeDebut = timeDebut;
-    }
-
-    public GregorianCalendar getTimeFin() {
-        return this.timeFin;
-    }
-
-    public void setTimeFin(GregorianCalendar timeFin) {
-        this.timeFin = timeFin;
     }
 }

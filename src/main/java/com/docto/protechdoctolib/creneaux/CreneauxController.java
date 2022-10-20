@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,9 +15,11 @@ import java.util.stream.Collectors;
 public class CreneauxController {
 
     private final CreneauxDAO creneauxDAO;
+    private final HeuresDebutFinDAO heuresDebutFinDAO;
 
-    public CreneauxController(CreneauxDAO creneauxDAO) {
+    public CreneauxController(CreneauxDAO creneauxDAO, HeuresDebutFinDAO heuresDebutFinDAO) {
         this.creneauxDAO = creneauxDAO;
+        this.heuresDebutFinDAO = heuresDebutFinDAO;
     }
 
     /**
@@ -56,17 +59,31 @@ public class CreneauxController {
     @PostMapping("/create_or_modify") // (8)
     public CreneauxDTO create_or_modify(@RequestBody CreneauxDTO dto) {
         Creneaux creneaux = null;
+        HeuresDebutFin heuresDebutFin1 = null;
         // On creation id is not defined
         if (dto.getId() == null) {
-            creneaux = creneauxDAO.save(new Creneaux(null,dto.getDateDebut(),dto.getDateFin(),dto.getJours(),dto.getTimeDebut(),dto.getTimeFin()));
+            creneaux = creneauxDAO.save(new Creneaux(null,dto.getDateDebut(),dto.getDateFin(),dto.getJours(),dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList()))); //la dernière partie sert uniquement à ce que swagger renvoie la bonne chose
+            for(HeuresDebutFin heuresDebutFin : dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList())){ //On ajoute chaque element de la liste des heuresDebutFin à la table correspondante
+                heuresDebutFin.setIdCreneaux(creneaux.getId());
+                heuresDebutFinDAO.save(heuresDebutFin);
+            }
         }
         else {
             creneaux = creneauxDAO.getReferenceById( dto.getId());  // (9)
             creneaux.setDateDebut(dto.getDateDebut());
             creneaux.setDateFin(dto.getDateFin());
             creneaux.setJours(dto.getJours());
-            creneaux.setTimeDebut(dto.getTimeDebut());
-            creneaux.setTimeFin(dto.getTimeFin());
+            creneaux.setHeuresDebutFin(dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList()));
+
+            //On supprime et en recrée les créneaux pour avoir des problèmes de nombres de créneaux
+            for(HeuresDebutFin ancienheuresDebutFin:heuresDebutFinDAO.findByIdCreneaux(dto.getId())){ //supprime tout les anciens créneaux
+                heuresDebutFinDAO.deleteById(ancienheuresDebutFin.getId());
+            }
+            for(HeuresDebutFin heuresDebutFin : dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList())){ //Crée les nouveaux créneaux
+                heuresDebutFin.setIdCreneaux(creneaux.getId());
+                heuresDebutFinDAO.save(heuresDebutFin);
+            }
+            creneaux.setHeuresDebutFin(dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList()));
 
         }
         return new CreneauxDTO(creneaux);

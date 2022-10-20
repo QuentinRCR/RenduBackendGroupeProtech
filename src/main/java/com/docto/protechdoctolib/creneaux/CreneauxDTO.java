@@ -1,8 +1,10 @@
 package com.docto.protechdoctolib.creneaux;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CreneauxDTO {
 
@@ -14,9 +16,7 @@ public class CreneauxDTO {
 
     private List<DayOfWeek> jours;
 
-    private GregorianCalendar timeDebut;
-
-    private GregorianCalendar timeFin;
+    private List<HeuresDebutFinDTO> heuresDebutFin;
 
     //Ce constructeur est necessaire à spring
     public CreneauxDTO() {
@@ -25,10 +25,15 @@ public class CreneauxDTO {
     public CreneauxDTO(Creneaux creneaux) {
         this.id = creneaux.getId();
         this.dateDebut = creneaux.getDateDebut();
-        this.dateFin = creneaux.getDateDebut();
+        this.dateFin = creneaux.getDateFin();
         this.jours = creneaux.getJours();
-        this.timeDebut = creneaux.getTimeDebut();
-        this.timeFin = creneaux.getTimeFin();
+        if (creneaux.getHeuresDebutFin()!=null) {
+            this.heuresDebutFin = creneaux.getHeuresDebutFin().stream().map(HeuresDebutFinDTO::new).collect(Collectors.toList());
+        }
+        else{
+            this.heuresDebutFin= new ArrayList<HeuresDebutFinDTO>();
+        }
+        //this.heuresDebutFin=creneaux.getHeuresDebutFin().stream().map(HeuresDebutFinDTO::new).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -63,19 +68,11 @@ public class CreneauxDTO {
         this.jours = jours;
     }
 
-    public GregorianCalendar getTimeDebut() {
-        return this.timeDebut;
+    public List<HeuresDebutFinDTO> getHeuresDebutFin() {
+        return heuresDebutFin;
     }
 
-    public void setTimeDebut(GregorianCalendar timeDebut) {
-        this.timeDebut = timeDebut;
-    }
-
-    public GregorianCalendar getTimeFin() {
-        return timeFin;
-    }
-
-    public void setTimeFin(GregorianCalendar timeFin) {
-        this.timeFin = timeFin;
+    public void setHeuresDebutFin(List<HeuresDebutFinDTO> heuresDebutFin) {
+        this.heuresDebutFin = heuresDebutFin;
     }
 }
