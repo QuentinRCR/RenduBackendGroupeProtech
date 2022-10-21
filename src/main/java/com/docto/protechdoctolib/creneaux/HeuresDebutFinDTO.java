@@ -3,6 +3,7 @@ package com.docto.protechdoctolib.creneaux;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
+import java.time.LocalTime;
 import java.util.GregorianCalendar;
 
 public class HeuresDebutFinDTO {
@@ -21,9 +22,9 @@ public class HeuresDebutFinDTO {
 
     private  Long idCreneaux;
 
-    private GregorianCalendar tempsDebut;
+    private LocalTime tempsDebut;
 
-    private GregorianCalendar tempsFin;
+    private LocalTime tempsFin;
 
     public Long getIdCreneaux() {
         return idCreneaux;
@@ -33,19 +34,19 @@ public class HeuresDebutFinDTO {
         this.idCreneaux = idCreneaux;
     }
 
-    public GregorianCalendar getTempsDebut() {
+    public LocalTime getTempsDebut() {
         return tempsDebut;
     }
 
-    public void setTempsDebut(GregorianCalendar tempsDebut) {
+    public void setTempsDebut(LocalTime tempsDebut) {
         this.tempsDebut = tempsDebut;
     }
 
-    public GregorianCalendar getTempsFin() {
+    public LocalTime getTempsFin() {
         return tempsFin;
     }
 
-    public void setTempsFin(GregorianCalendar tempsFin) {
+    public void setTempsFin(LocalTime tempsFin) {
         this.tempsFin = tempsFin;
     }
 

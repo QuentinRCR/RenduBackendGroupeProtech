@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -15,13 +16,12 @@ public class Creneaux {
     public Creneaux() {
     }
 
-    public Creneaux(Long id, GregorianCalendar dateDebut, GregorianCalendar dateFin, List<DayOfWeek> jours, List<HeuresDebutFin> heuresDebutFin) {
+    public Creneaux(Long id, LocalDate dateDebut, LocalDate dateFin, List<DayOfWeek> jours, List<HeuresDebutFin> heuresDebutFin) {
         this.id = id;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.jours = jours;
         this.heuresDebutFin = heuresDebutFin;
-
     }
 
     /**
@@ -36,14 +36,14 @@ public class Creneaux {
      */
     @Column
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss[.SSS][.SS][.S]")
-     private GregorianCalendar dateDebut;
+     private LocalDate dateDebut;
 
     /**
      * Dernier jour de la plage de temps
      */
     @Column
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss[.SSS][.SS][.S]")
-     private GregorianCalendar dateFin;
+     private LocalDate dateFin;
 
     /**
      * Liste des jours pour lequels on peut prendre des rendez-vous
@@ -74,19 +74,19 @@ public class Creneaux {
         this.id = id;
     }
 
-    public GregorianCalendar getDateDebut() {
-        return this.dateDebut;
+    public LocalDate getDateDebut() {
+        return dateDebut;
     }
 
-    public void setDateDebut(GregorianCalendar dateDebut) {
+    public void setDateDebut(LocalDate dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public GregorianCalendar getDateFin() {
-        return this.dateFin;
+    public LocalDate getDateFin() {
+        return dateFin;
     }
 
-    public void setDateFin(GregorianCalendar dateFin) {
+    public void setDateFin(LocalDate dateFin) {
         this.dateFin = dateFin;
     }
 

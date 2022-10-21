@@ -89,12 +89,13 @@ public class CreneauxController {
         return new CreneauxDTO(creneaux);
     }
 
+
     /**
      * Prend un GregorianCalendar de rendez-vous en paramètre et renvoit l'id du créneau correspondant s'il existe et null sinon
      * @param dateDebutRDV,duree
      * @return id du créneau corespondant et null sinon
      */
-    public CreneauxDTO isWithinASlot(GregorianCalendar dateDebutRDV,int duree){
+    /*public CreneauxDTO isWithinASlot(GregorianCalendar dateDebutRDV,int duree){
         GregorianCalendar dateFinRDV= dateDebutRDV;
         System.out.println("kjdns");
         System.out.println(dateDebutRDV.get(Calendar.DAY_OF_MONTH));
@@ -122,6 +123,6 @@ public class CreneauxController {
             }
         }
         return bonCreneau;
-    }
+    }*/
 
 }

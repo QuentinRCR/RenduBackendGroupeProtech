@@ -1,6 +1,7 @@
 package com.docto.protechdoctolib.creneaux;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -10,9 +11,9 @@ public class CreneauxDTO {
 
     private Long id;
 
-    private GregorianCalendar dateDebut;
+    private LocalDate dateDebut;
 
-    private GregorianCalendar dateFin;
+    private LocalDate dateFin;
 
     private List<DayOfWeek> jours;
 
@@ -44,19 +45,19 @@ public class CreneauxDTO {
         this.id = id;
     }
 
-    public GregorianCalendar getDateDebut() {
+    public LocalDate getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(GregorianCalendar dateDebut) {
+    public void setDateDebut(LocalDate dateDebut) {
         this.dateDebut = dateDebut;
     }
 
-    public GregorianCalendar getDateFin() {
+    public LocalDate getDateFin() {
         return dateFin;
     }
 
-    public void setDateFin(GregorianCalendar dateFin) {
+    public void setDateFin(LocalDate dateFin) {
         this.dateFin = dateFin;
     }
 

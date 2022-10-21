@@ -3,6 +3,7 @@ package com.docto.protechdoctolib.creneaux;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.GregorianCalendar;
 
 /**
@@ -14,7 +15,7 @@ public class HeuresDebutFin {
     public HeuresDebutFin() {
     }
 
-    public HeuresDebutFin(Long id, Long idCreneaux, GregorianCalendar tempsDebut, GregorianCalendar tempsFin) {
+    public HeuresDebutFin(Long id, Long idCreneaux, LocalTime tempsDebut, LocalTime tempsFin) {
         this.id = id;
         this.idCreneaux = idCreneaux;
         this.tempsDebut = tempsDebut;
@@ -37,11 +38,11 @@ public class HeuresDebutFin {
 
     @Column
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss[.SSS][.SS][.S]")
-    private GregorianCalendar tempsDebut;
+    private LocalTime tempsDebut;
 
     @Column
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss[.SSS][.SS][.S]")
-    private GregorianCalendar tempsFin;
+    private LocalTime tempsFin;
 
     public Long getId() {
         return id;
@@ -49,14 +50,6 @@ public class HeuresDebutFin {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public GregorianCalendar getTempsDebut() {
-        return tempsDebut;
-    }
-
-    public void setTempsDebut(GregorianCalendar tempsDebut) {
-        this.tempsDebut = tempsDebut;
     }
 
     public Long getIdCreneaux() {
@@ -67,11 +60,19 @@ public class HeuresDebutFin {
         this.idCreneaux = idCreneaux;
     }
 
-    public GregorianCalendar getTempsFin() {
+    public LocalTime getTempsDebut() {
+        return tempsDebut;
+    }
+
+    public void setTempsDebut(LocalTime tempsDebut) {
+        this.tempsDebut = tempsDebut;
+    }
+
+    public LocalTime getTempsFin() {
         return tempsFin;
     }
 
-    public void setTempsFin(GregorianCalendar tempsFin) {
+    public void setTempsFin(LocalTime tempsFin) {
         this.tempsFin = tempsFin;
     }
 }
