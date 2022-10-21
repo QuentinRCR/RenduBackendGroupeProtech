@@ -81,7 +81,7 @@ public class CreneauxController {
 
             //On supprime et en recrée les créneaux pour avoir des problèmes de nombres de créneaux
             for(HeuresDebutFin ancienheuresDebutFin:heuresDebutFinDAO.findByIdCreneaux(dto.getId())){ //supprime tout les anciens créneaux
-                heuresDebutFinDAO.deleteById(ancienheuresDebutFin.getId());
+                heuresDebutFinDAO.deleteById(ancienheuresDebutFin.getIdPlage());
             }
             for(HeuresDebutFin heuresDebutFin : dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList())){ //Crée les nouveaux créneaux
                 heuresDebutFin.setIdCreneaux(creneaux.getId());

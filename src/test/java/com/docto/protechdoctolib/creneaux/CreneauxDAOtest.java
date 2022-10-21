@@ -10,9 +10,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.DayOfWeek;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -21,21 +22,28 @@ public class CreneauxDAOtest {
     @Autowired
     private CreneauxDAO creneauxDAO;
 
+    @Autowired
+    private  HeuresDebutFinDAO heuresDebutFinDAO;
+
     /**
      * Teste si le créneaux 1 contient bien les bonnes informations
       */
-    /*@Test
+    @Test
     public void shouldFindACreaneau() {
-        Creneaux creneaux = creneauxDAO.getReferenceById(1000L);
-        List<DayOfWeek> listjours= List.of(DayOfWeek.MONDAY,DayOfWeek.FRIDAY);
-        List<GregorianCalendar> pair = List.of(new GregorianCalendar(1990,01-1,01,8,30,00),new GregorianCalendar(1990,01-1,01,18,30,00));
-        List<List<GregorianCalendar>> listHeureDebutFin = List.of(pair);
-        Creneaux creneauTest = new Creneaux(1L, new GregorianCalendar(2022,10-1,16) , new GregorianCalendar(2022,10-1,18), listjours,listHeureDebutFin);
-        Assertions.assertThat(creneaux.getJours().get(0)).isEqualTo(creneauTest.getJours().get(0));
+        Creneaux creneaux =creneauxDAO.getReferenceById(1000L); //creneauxDAO.getReferenceById(2000L);
+        List<DayOfWeek> listjours= List.of(DayOfWeek.FRIDAY);
+        LocalDate dateDebut = LocalDate.of(2022,11,22);
+        LocalDate dateFin = LocalDate.of(2022,11,30);
+        HeuresDebutFin heuresDebutFin1 = new HeuresDebutFin(1001L,1000L, LocalTime.of(8,0),LocalTime.of(12,0));
+        HeuresDebutFin heuresDebutFin2 = new HeuresDebutFin(1002L,1000L, LocalTime.of(14,0),LocalTime.of(18,0));
+        List<HeuresDebutFin> listHeureDebutFin = List.of(heuresDebutFin1,heuresDebutFin2);
+        Creneaux creneauTest = new Creneaux(1000L,dateDebut,dateFin,listjours,listHeureDebutFin);
         Assertions.assertThat(creneaux.getDateDebut()).isEqualTo(creneauTest.getDateDebut());
+        Assertions.assertThat(creneaux.getJours().get(0)).isEqualTo(creneauTest.getJours().get(0));
         Assertions.assertThat(creneaux.getDateFin()).isEqualTo(creneauTest.getDateFin());
-        Assertions.assertThat(creneaux.getHeuresDebutFin()).isEqualTo(creneauTest.getHeuresDebutFin());
-    }*/
+        Assertions.assertThat(creneaux.getHeuresDebutFin().get(0).getTempsDebut()).isEqualTo(creneauTest.getHeuresDebutFin().get(0).getTempsDebut());
+        Assertions.assertThat(creneaux.getHeuresDebutFin().get(0).getTempsFin()).isEqualTo(creneauTest.getHeuresDebutFin().get(0).getTempsFin());
+    }
 
     /**
      * Teste si la liste de créneaux retourné a bien une taille de 2
@@ -58,25 +66,13 @@ public class CreneauxDAOtest {
     }
 
     /**
-     * Teste si ça crée un nouveau créneau
-     */
-    /*@Test
-    public void shouldCreateANewCreneau(){
-        List<GregorianCalendar> pair = List.of(new GregorianCalendar(1990,01-1,01,8,30,00),new GregorianCalendar(1990,01-1,01,18,30,00));
-        List<List<GregorianCalendar>> listHeureDebutFin = List.of(pair);
-        creneauxDAO.save(new Creneaux(3L,new GregorianCalendar(),new GregorianCalendar(),new ArrayList<DayOfWeek>(),listHeureDebutFin));
-        Creneaux creneau = creneauxDAO.getReferenceById(3L);
-        Assertions.assertThat(creneau).isInstanceOf(Creneaux.class);
-    }*/
-
-    /**
      * Teste si ça modifie bien le temps de fin du créneau ayant l'id 1
      */
-    /*@Test
+    @Test
     public void shoudModifyCreneau1(){
         Creneaux creneaux = creneauxDAO.getReferenceById(1000L);
-        creneaux.setDateDebut(new GregorianCalendar(2695,12,30));
+        creneaux.setDateDebut(LocalDate.of(2695,12,30));
         Creneaux creneaux1 = creneauxDAO.getReferenceById(1000L);
-        Assertions.assertThat(creneaux1.getDateDebut()).isEqualTo(new GregorianCalendar(2695,12,30));
-    }*/
+        Assertions.assertThat(creneaux1.getDateDebut()).isEqualTo(LocalDate.of(2695,12,30));
+    }
 }

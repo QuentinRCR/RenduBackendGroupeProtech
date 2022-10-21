@@ -16,14 +16,14 @@ public class HeuresDebutFin {
     }
 
     public HeuresDebutFin(Long id, Long idCreneaux, LocalTime tempsDebut, LocalTime tempsFin) {
-        this.id = id;
+        this.idPlage = id;
         this.idCreneaux = idCreneaux;
         this.tempsDebut = tempsDebut;
         this.tempsFin = tempsFin;
     }
 
     public  HeuresDebutFin(HeuresDebutFinDTO heuresDebutFinDTO){
-        this.id=heuresDebutFinDTO.getId();
+        this.idPlage=heuresDebutFinDTO.getIdPlage();
         this.tempsDebut=heuresDebutFinDTO.getTempsDebut();
         this.tempsFin=heuresDebutFinDTO.getTempsFin();
         this.idCreneaux= heuresDebutFinDTO.getIdCreneaux();
@@ -31,7 +31,7 @@ public class HeuresDebutFin {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long idPlage;
 
 
     private  Long idCreneaux;
@@ -44,12 +44,12 @@ public class HeuresDebutFin {
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss[.SSS][.SS][.S]")
     private LocalTime tempsFin;
 
-    public Long getId() {
-        return id;
+    public Long getIdPlage() {
+        return idPlage;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdPlage(Long idPlage) {
+        this.idPlage = idPlage;
     }
 
     public Long getIdCreneaux() {

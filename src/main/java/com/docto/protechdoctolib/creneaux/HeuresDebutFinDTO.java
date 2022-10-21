@@ -12,13 +12,13 @@ public class HeuresDebutFinDTO {
     }
 
     public HeuresDebutFinDTO(HeuresDebutFin heuresDebutFin) {
-        this.id=heuresDebutFin.getId();
+        this.idPlage=heuresDebutFin.getIdPlage();
         this.idCreneaux = heuresDebutFin.getIdCreneaux();
         this.tempsDebut = heuresDebutFin.getTempsDebut();
         this.tempsFin = heuresDebutFin.getTempsFin();
     }
 
-    private  Long id;
+    private  Long idPlage;
 
     private  Long idCreneaux;
 
@@ -50,11 +50,11 @@ public class HeuresDebutFinDTO {
         this.tempsFin = tempsFin;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdPlage() {
+        return idPlage;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdPlage(Long idPlage) {
+        this.idPlage = idPlage;
     }
 }
