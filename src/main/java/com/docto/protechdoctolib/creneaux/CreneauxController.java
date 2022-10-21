@@ -100,11 +100,29 @@ public class CreneauxController {
      * @param dateDebutRDV,duree
      * @return id du créneau corespondant et null sinon
      */
+
+    /**
+     * Cherche si il y a un créneau future dans le rendez-vous commencant à dateDebutRDV et d'une durée dureee qui correspond à ce rendez-vous
+     * @param dateDebutRDV
+     * @param duree
+     * @return
+     */
     public CreneauxDTO isWithinASlot(LocalDateTime dateDebutRDV, Duration duree){
+        return isWithinASlot(dateDebutRDV,duree,LocalDate.now());
+    }
+
+    /**
+     * Cherche si il y a un créneau après dateDebutRecherche la date  dans le rendez-vous commencant à dateDebutRDV et d'une durée dureee qui correspond à ce rendez-vous
+     * @param dateDebutRDV
+     * @param duree
+     * @param dateDebutRecherche
+     * @return
+     */
+    public CreneauxDTO isWithinASlot(LocalDateTime dateDebutRDV, Duration duree, LocalDate dateDebutRecherche){
         LocalDateTime dateFinRDV= dateDebutRDV.plus(duree);
 
         CreneauxDTO bonCreneau=null;
-        for (Creneaux creneau : creneauxDAO.findAll()){
+        for (Creneaux creneau : creneauxDAO.findCreneauxAfterDate(dateDebutRecherche)){
             if (
                     (creneau.getJours().contains(dateDebutRDV.getDayOfWeek())) &&
                     (dateDebutRDV.toLocalDate().isAfter(creneau.getDateDebut())) || (dateDebutRDV.toLocalDate().equals(creneau.getDateDebut())) &&

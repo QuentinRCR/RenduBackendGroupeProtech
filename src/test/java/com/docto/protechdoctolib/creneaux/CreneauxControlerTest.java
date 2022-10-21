@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.GregorianCalendar;
 
@@ -27,7 +28,7 @@ public class CreneauxControlerTest {
         creneauxController= new CreneauxController(creneauxDAO,heuresDebutFinDAO);
         LocalDateTime heure = LocalDateTime.of(2022,10,11,9,1);
         Duration duree= Duration.ofMinutes(30);
-        CreneauxDTO test= creneauxController.isWithinASlot(heure,duree);
+        CreneauxDTO test= creneauxController.isWithinASlot(heure,duree, LocalDate.of(2022,8,1));
         Assertions.assertThat(test.getId()).isEqualTo(2000L);
     }
 
@@ -36,7 +37,7 @@ public class CreneauxControlerTest {
         creneauxController= new CreneauxController(creneauxDAO,heuresDebutFinDAO);
         LocalDateTime heure = LocalDateTime.of(2022,10,11,9,0);
         Duration duree= Duration.ofMinutes(30);
-        CreneauxDTO test= creneauxController.isWithinASlot(heure,duree);
+        CreneauxDTO test= creneauxController.isWithinASlot(heure,duree,LocalDate.of(2022,8,1));
         Assertions.assertThat(test.getId()).isEqualTo(2000L);
     }
 
@@ -45,7 +46,7 @@ public class CreneauxControlerTest {
         creneauxController= new CreneauxController(creneauxDAO,heuresDebutFinDAO);
         LocalDateTime heure = LocalDateTime.of(2022,10,10,9,0);
         Duration duree= Duration.ofMinutes(30);
-        CreneauxDTO test= creneauxController.isWithinASlot(heure,duree);
+        CreneauxDTO test= creneauxController.isWithinASlot(heure,duree,LocalDate.of(2022,8,1));
         Assertions.assertThat(test.getId()).isEqualTo(2000L);
     }
 

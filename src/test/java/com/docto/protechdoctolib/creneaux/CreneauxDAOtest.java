@@ -75,4 +75,10 @@ public class CreneauxDAOtest {
         Creneaux creneaux1 = creneauxDAO.getReferenceById(1000L);
         Assertions.assertThat(creneaux1.getDateDebut()).isEqualTo(LocalDate.of(2695,12,30));
     }
+
+    @Test
+    public void findCreneauxAfterDate(){
+        List<Creneaux> creneaux = creneauxDAO.findCreneauxAfterDate(LocalDate.of(2022,10,11));
+        Assertions.assertThat(creneaux.get(0).getId()).isEqualTo(1000L);
+    }
 }
