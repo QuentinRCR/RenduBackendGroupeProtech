@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.time.DayOfWeek;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -91,21 +91,37 @@ public class CreneauxController {
 
     /**
      * Prend un GregorianCalendar de rendez-vous en paramètre et renvoit l'id du créneau correspondant s'il existe et null sinon
-     * @param dateeRDV
+     * @param dateDebutRDV,duree
      * @return id du créneau corespondant et null sinon
      */
-    /*@PostMapping("/isWithinASlot")
-    public CreneauxDTO isWithinASlot(@RequestBody DateDTO dateeRDV){
-        GregorianCalendar dateRDV = dateeRDV.getDate();
+    public CreneauxDTO isWithinASlot(GregorianCalendar dateDebutRDV,int duree){
+        GregorianCalendar dateFinRDV= dateDebutRDV;
+        System.out.println("kjdns");
+        System.out.println(dateDebutRDV.get(Calendar.DAY_OF_MONTH));
+        System.out.println(dateDebutRDV.get(Calendar.MONTH));
+        dateFinRDV.add(Calendar.MINUTE,duree);
+
         CreneauxDTO bonCreneau=null;
-        List<Creneaux> tousLesCreneaux=creneauxDAO.findAll();
-        for (Creneaux creneau : tousLesCreneaux){
-            if ((dateRDV.before(creneau.getDateFin()) & (dateRDV.after(creneau.getDateDebut())))& ((dateRDV.getTime()<=creneau.getTimeFin().getTime()) & (dateRDV.getTime()>=creneau.getTimeDebut().getTime())&(creneau.getJours().contains(DayOfWeek.of(dateRDV.getDay()))))){
-                //il faut ajouter le check du jour
-                bonCreneau=new CreneauxDTO(creneau);
+        for (Creneaux creneau : creneauxDAO.findAll()){
+            System.out.println(creneau.getDateDebut().get(Calendar.DAY_OF_MONTH));
+            System.out.println(creneau.getDateDebut().get(Calendar.MONTH));
+            if (
+                    (creneau.getJours().contains(DayOfWeek.of(dateDebutRDV.get(Calendar.DAY_OF_WEEK)))) &&
+                            (dateDebutRDV.getTimeInMillis()>=creneau.getDateDebut().getTimeInMillis()) &&
+                            (dateFinRDV.getTimeInMillis()<=creneau.getDateFin().getTimeInMillis())
+            ){
+                for (HeuresDebutFin plage:creneau.getHeuresDebutFin()){
+                    if (
+                            (plage.getTempsDebut().get(Calendar.HOUR_OF_DAY)*60+plage.getTempsDebut().get(Calendar.MINUTE)>=creneau.getDateDebut().get(Calendar.HOUR_OF_DAY)*60+creneau.getDateDebut().get(Calendar.MINUTE)) &&
+                                    (plage.getTempsFin().get(Calendar.HOUR_OF_DAY)*60+plage.getTempsFin().get(Calendar.MINUTE)<=creneau.getDateFin().get(Calendar.HOUR_OF_DAY)*60+creneau.getDateFin().get(Calendar.MINUTE))
+                    ){
+                        bonCreneau=new CreneauxDTO(creneau);
+                    }
+                }
+
             }
         }
         return bonCreneau;
-    }*/
+    }
 
 }

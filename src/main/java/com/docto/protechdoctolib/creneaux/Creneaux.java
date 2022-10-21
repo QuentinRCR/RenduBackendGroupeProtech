@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -96,4 +97,5 @@ public class Creneaux {
     public void setJours(List<DayOfWeek> jours) {
         this.jours = jours;
     }
+
 }

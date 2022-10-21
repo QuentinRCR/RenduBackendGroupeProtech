@@ -24,7 +24,7 @@ public class CreneauxDAOtest {
     /**
      * Teste si le créneaux 1 contient bien les bonnes informations
       */
-    @Test
+    /*@Test
     public void shouldFindACreaneau() {
         Creneaux creneaux = creneauxDAO.getReferenceById(1000L);
         List<DayOfWeek> listjours= List.of(DayOfWeek.MONDAY,DayOfWeek.FRIDAY);
@@ -35,7 +35,7 @@ public class CreneauxDAOtest {
         Assertions.assertThat(creneaux.getDateDebut()).isEqualTo(creneauTest.getDateDebut());
         Assertions.assertThat(creneaux.getDateFin()).isEqualTo(creneauTest.getDateFin());
         Assertions.assertThat(creneaux.getHeuresDebutFin()).isEqualTo(creneauTest.getHeuresDebutFin());
-    }
+    }*/
 
     /**
      * Teste si la liste de créneaux retourné a bien une taille de 2
@@ -60,14 +60,14 @@ public class CreneauxDAOtest {
     /**
      * Teste si ça crée un nouveau créneau
      */
-    @Test
+    /*@Test
     public void shouldCreateANewCreneau(){
         List<GregorianCalendar> pair = List.of(new GregorianCalendar(1990,01-1,01,8,30,00),new GregorianCalendar(1990,01-1,01,18,30,00));
         List<List<GregorianCalendar>> listHeureDebutFin = List.of(pair);
         creneauxDAO.save(new Creneaux(3L,new GregorianCalendar(),new GregorianCalendar(),new ArrayList<DayOfWeek>(),listHeureDebutFin));
         Creneaux creneau = creneauxDAO.getReferenceById(3L);
         Assertions.assertThat(creneau).isInstanceOf(Creneaux.class);
-    }
+    }*/
 
     /**
      * Teste si ça modifie bien le temps de fin du créneau ayant l'id 1
