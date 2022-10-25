@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CreneauxDAO extends JpaRepository<Creneaux, Long> {
 
-    @Query("select c from Creneaux c where c.dateDebut>=:datee")  // (2)
+    @Query("select c from Creneaux c where c.dateFin>=:datee")  // (2)
     List<Creneaux> findCreneauxAfterDate(@Param("datee") LocalDate datee);
 
 }
