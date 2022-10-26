@@ -1,16 +1,16 @@
 package com.docto.protechdoctolib.creneaux;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @RestController // (1)
@@ -20,6 +20,8 @@ public class CreneauxController {
 
     private final CreneauxDAO creneauxDAO;
     private final HeuresDebutFinDAO heuresDebutFinDAO;
+
+    private static Logger logger = Logger.getLogger(CreneauxController.class.getName());
 
     public CreneauxController(CreneauxDAO creneauxDAO, HeuresDebutFinDAO heuresDebutFinDAO) {
         this.creneauxDAO = creneauxDAO;
@@ -32,6 +34,7 @@ public class CreneauxController {
      */
     @GetMapping
     public List<CreneauxDTO> findAll(){
+        logger.info("la fonction findAll à été utilisé");
         return creneauxDAO.findAll().stream().map(CreneauxDTO::new).collect(Collectors.toList());
     }
 
@@ -42,6 +45,7 @@ public class CreneauxController {
      */
     @GetMapping(path = "/{id}")
     public CreneauxDTO findById(@PathVariable Long id) {
+        logger.info( "la fonction findById à été utilisé avec l'id "+id.toString());
         return creneauxDAO.findById(id).map(CreneauxDTO::new).orElse(null);
     }
 
@@ -51,7 +55,13 @@ public class CreneauxController {
      */
     @DeleteMapping(path = "/{id}")
     public void deleteParId(@PathVariable Long id) {
-        creneauxDAO.deleteById(id);
+        logger.info( "le créneau avec l'id "+id.toString()+" a été supprimé");
+        try{
+            creneauxDAO.deleteById(id);
+        }
+        catch (EmptyResultDataAccessException e){
+            logger.warning("Le créneau à supprimé n'existe pas");
+        }
     }
 
 
@@ -71,24 +81,33 @@ public class CreneauxController {
                 heuresDebutFin.setIdCreneaux(creneaux.getId());
                 heuresDebutFinDAO.save(heuresDebutFin);
             }
+            logger.info( "un nouveau créneau a été crée, il a pour id "+creneaux.getId().toString());
         }
         else {
-            creneaux = creneauxDAO.getReferenceById( dto.getId());  // (9)
-            creneaux.setDateDebut(dto.getDateDebut());
-            creneaux.setDateFin(dto.getDateFin());
-            creneaux.setJours(dto.getJours());
-            creneaux.setHeuresDebutFin(dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList()));
+            try {
+                creneaux = creneauxDAO.getReferenceById(dto.getId());  // (9)
+                creneaux.setDateDebut(dto.getDateDebut());
+                creneaux.setDateFin(dto.getDateFin());
+                creneaux.setJours(dto.getJours());
+                creneaux.setHeuresDebutFin(dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList()));
 
-            //On supprime et en recrée les créneaux pour avoir des problèmes de nombres de créneaux
-            for(HeuresDebutFin ancienheuresDebutFin:heuresDebutFinDAO.findByIdCreneaux(dto.getId())){ //supprime tout les anciens créneaux
-                heuresDebutFinDAO.deleteById(ancienheuresDebutFin.getIdPlage());
-            }
-            for(HeuresDebutFin heuresDebutFin : dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList())){ //Crée les nouveaux créneaux
-                heuresDebutFin.setIdCreneaux(creneaux.getId());
-                heuresDebutFinDAO.save(heuresDebutFin);
-            }
-            creneaux.setHeuresDebutFin(dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList()));
+                //On supprime et en recrée les créneaux pour avoir des problèmes de nombres de créneaux
+                for (HeuresDebutFin ancienheuresDebutFin : heuresDebutFinDAO.findByIdCreneaux(dto.getId())) { //supprime tout les anciens créneaux
+                    heuresDebutFinDAO.deleteById(ancienheuresDebutFin.getIdPlage());
+                }
+                for (HeuresDebutFin heuresDebutFin : dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList())) { //Crée les nouveaux créneaux
+                    heuresDebutFin.setIdCreneaux(creneaux.getId());
+                    heuresDebutFinDAO.save(heuresDebutFin);
+                }
+                creneaux.setHeuresDebutFin(dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList()));
 
+                logger.info("le créneau avec l'id " + creneaux.getId().toString() + " a été modifié");
+
+            }
+            catch (EntityNotFoundException e){
+                logger.warning("id créneau non trouvé, pour en créer un nouveau, mettre null pour son id"); //should be error but cannot log error
+                return null;
+            }
         }
         return new CreneauxDTO(creneaux);
     }
@@ -96,7 +115,7 @@ public class CreneauxController {
 
 
     /**
-     * Prend un GregorianCalendar de rendez-vous en paramètre et renvoit l'id du créneau correspondant s'il existe et null sinon
+     * Prend un LocalDateTime de rendez-vous en paramètre et renvoit l'id du créneau correspondant s'il existe et null sinon
      * @param dateDebutRDV,duree
      * @return id du créneau corespondant et null sinon
      */
@@ -119,6 +138,8 @@ public class CreneauxController {
      * @return
      */
     public CreneauxDTO isWithinASlot(LocalDateTime dateDebutRDV, Duration duree, LocalDate dateDebutRecherche){
+        logger.info( "un créneau pour un rendez-vous le "+dateDebutRDV.toString()+" d'une durée de "+duree.toString()+ "après la date de "+dateDebutRecherche.toString()+" a été cherché");
+
         LocalDateTime dateFinRDV= dateDebutRDV.plus(duree);
 
         CreneauxDTO bonCreneau=null;
@@ -138,6 +159,11 @@ public class CreneauxController {
                 }
 
             }
+        }
+        if(bonCreneau == null && logger.isLoggable(Level.INFO)){
+            logger.info("Le créneau "+bonCreneau.getId().toString()+" correspond");
+        } else if (logger.isLoggable(Level.INFO)) {
+            logger.info("Aucun créneau ne correspond");
         }
         return bonCreneau;
     }
