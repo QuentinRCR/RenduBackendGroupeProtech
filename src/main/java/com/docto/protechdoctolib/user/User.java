@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Entity
+@Table(name="RUser")
 public class User implements UserDetails {
     @Id
     @GeneratedValue
@@ -78,6 +79,10 @@ public class User implements UserDetails {
         this.phonenumber = phonenumber;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -118,12 +123,13 @@ public class User implements UserDetails {
 
     }
 
-    public User(String email, String nom, String prenom, String password, Double phonenumber, UserRole appUserRole, Boolean locked, Boolean enabled) {
+    public User(String email, String nom, String prenom, String password, Double phonenumber, String username, UserRole appUserRole, Boolean locked, Boolean enabled) {
         this.email = email;
         this.nom = nom;
         this.prenom = prenom;
         this.password = password;
         this.phonenumber = phonenumber;
+        this.username = username;
         this.appUserRole = appUserRole;
         this.locked = locked;
         this.enabled = enabled;
