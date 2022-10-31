@@ -7,6 +7,8 @@ public class RegistrationRequest {
     private final String email;
     private final String password;
 
+    private final Double phonenumber;
+
     public String getNom() {
         return nom;
     }
@@ -23,11 +25,14 @@ public class RegistrationRequest {
         return password;
     }
 
-    public RegistrationRequest(String nom, String prenom, String email, String password) {
+    public Double getPhonenumber() { return phonenumber; }
+
+    public RegistrationRequest(String nom, String prenom, String email, String password, Double phonenumber) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.password = password;
+        this.phonenumber = phonenumber;
     }
 
 

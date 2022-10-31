@@ -15,21 +15,19 @@ public class User implements UserDetails {
     Long Id;
 
     @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
     private String nom;
 
     @Column(nullable = false)
     private String prenom;
 
     @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
     private String password;
 
     @Column(nullable = false)
     private Double phonenumber;
-
-    private String username;
     @Enumerated(EnumType.STRING)
     private UserRole appUserRole;
     private Boolean locked;
@@ -41,10 +39,6 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         Id = id;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public void setEmail(String email) {
@@ -67,6 +61,10 @@ public class User implements UserDetails {
         this.prenom = prenom;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -78,11 +76,6 @@ public class User implements UserDetails {
     public void setPhonenumber(Double phonenumber) {
         this.phonenumber = phonenumber;
     }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -96,7 +89,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
@@ -123,15 +116,12 @@ public class User implements UserDetails {
 
     }
 
-    public User(String email, String nom, String prenom, String password, Double phonenumber, String username, UserRole appUserRole, Boolean locked, Boolean enabled) {
-        this.email = email;
+    public User( String nom, String prenom, String email, String password, Double phonenumber, UserRole appUserRole) {
         this.nom = nom;
         this.prenom = prenom;
+        this.email = email;
         this.password = password;
         this.phonenumber = phonenumber;
-        this.username = username;
         this.appUserRole = appUserRole;
-        this.locked = locked;
-        this.enabled = enabled;
     }
 }
