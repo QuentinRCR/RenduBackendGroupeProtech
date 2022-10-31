@@ -41,6 +41,6 @@ public class UserService implements UserDetailsService {
 
         // TODO: SEND CONFIRMATION TOKEN
 
-        return "";
+        return "it works";
     }
 }

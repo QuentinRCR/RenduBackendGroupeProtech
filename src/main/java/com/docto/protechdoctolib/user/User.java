@@ -30,8 +30,8 @@ public class User implements UserDetails {
     private Double phonenumber;
     @Enumerated(EnumType.STRING)
     private UserRole appUserRole;
-    private Boolean locked;
-    private Boolean enabled;
+    private Boolean locked= false;
+    private Boolean enabled= false;
 
     public Long getId() {
         return Id;
