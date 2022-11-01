@@ -5,6 +5,7 @@ import com.docto.protechdoctolib.user.User;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 public class ConfirmationToken {
 
     @Id
@@ -66,14 +67,22 @@ public class ConfirmationToken {
         return confirmedAt;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
     public ConfirmationToken() {
     }
 
-    public ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiresAt, LocalDateTime confirmedAt, User user) {
+    public ConfirmationToken(String token, LocalDateTime createdAt, LocalDateTime expiresAt, User user) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
-        this.confirmedAt = confirmedAt;
         this.user = user;
     }
+
 }
