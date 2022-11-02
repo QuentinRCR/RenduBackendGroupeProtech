@@ -1,5 +1,6 @@
 package com.docto.protechdoctolib.registration.token;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -10,7 +11,7 @@ public class ConfirmationTokenService {
 
     private final ConfirmationTokenRepository confirmationTokenRepository;
 
-    public ConfirmationTokenService(ConfirmationTokenRepository confirmationTokenRepository) {
+    public ConfirmationTokenService(@Qualifier("tokens")ConfirmationTokenRepository confirmationTokenRepository) {
         this.confirmationTokenRepository = confirmationTokenRepository;
     }
 

@@ -2,6 +2,7 @@ package com.docto.protechdoctolib.email;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -31,6 +32,7 @@ public class EmailService implements EmailSender{
             helper.setTo(to);
             helper.setSubject("confirm your email");
             helper.setFrom("hello");
+            javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {
             LOGGER.error("failed to send email", e);
             throw new IllegalStateException("failed to send email");

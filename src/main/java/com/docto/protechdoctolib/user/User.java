@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 
 @Entity
 @Table(name="RUser")
@@ -33,12 +34,21 @@ public class User implements UserDetails {
     private Boolean locked= false;
     private Boolean enabled= false;
 
-    public Long getId() {
-        return Id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(Id, user.Id) && Objects.equals(nom, user.nom) && Objects.equals(prenom, user.prenom) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(phonenumber, user.phonenumber) && appUserRole == user.appUserRole && Objects.equals(locked, user.locked) && Objects.equals(enabled, user.enabled);
     }
 
-    public void setId(Long id) {
-        Id = id;
+    @Override
+    public int hashCode() {
+        return Objects.hash(Id, nom, prenom, email, password, phonenumber, appUserRole, locked, enabled);
+    }
+
+    public Long getId() {
+        return Id;
     }
 
     public void setEmail(String email) {

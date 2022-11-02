@@ -42,8 +42,8 @@ public class RegistrationService {
                         UserRole.USER
                 ));
         // TODO : BON LIEN A METTRE
-        String link ="http://localhost:8080";
-        emailSender.send(request.getEmail(), buildEmail(request.getNom(), link ));
+        String link ="http://localhost:8080/api/v1/registration/" + token;
+        emailSender.send(request.getEmail(), buildEmail(request.getNom(), link));
 
         return token;
     }
