@@ -1,0 +1,1 @@
+INSERT INTO RUSER(id, nom, prenom, email, password, phonenumber) VALUES(-10, 'a', 'b', 'paul.villeneuve.pv@gmail.com', 'password', 00);
