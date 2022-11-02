@@ -9,8 +9,8 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.util.stream.Collectors;
 
 @RestController // (1)
@@ -21,7 +21,7 @@ public class CreneauxController {
     private final CreneauxDAO creneauxDAO;
     private final HeuresDebutFinDAO heuresDebutFinDAO;
 
-    private static Logger logger = Logger.getLogger(CreneauxController.class.getName());
+    private final static Logger logger = LogManager.getLogger(CreneauxController.class);
 
     public CreneauxController(CreneauxDAO creneauxDAO, HeuresDebutFinDAO heuresDebutFinDAO) {
         this.creneauxDAO = creneauxDAO;
@@ -60,7 +60,7 @@ public class CreneauxController {
             creneauxDAO.deleteById(id);
         }
         catch (EmptyResultDataAccessException e){
-            logger.warning("Le créneau à supprimé n'existe pas");
+            logger.warn("Le créneau à supprimé n'existe pas");
         }
     }
 
@@ -105,7 +105,7 @@ public class CreneauxController {
 
             }
             catch (EntityNotFoundException e){
-                logger.warning("id créneau non trouvé, pour en créer un nouveau, mettre null pour son id"); //should be error but cannot log error
+                logger.error("id créneau non trouvé, pour en créer un nouveau, mettre null pour son id");
                 return null;
             }
         }
@@ -160,9 +160,9 @@ public class CreneauxController {
 
             }
         }
-        if(bonCreneau == null && logger.isLoggable(Level.INFO)){
+        if(bonCreneau != null && logger.isDebugEnabled()){
             logger.info("Le créneau "+bonCreneau.getId().toString()+" correspond");
-        } else if (logger.isLoggable(Level.INFO)) {
+        } else if (logger.isDebugEnabled()) {
             logger.info("Aucun créneau ne correspond");
         }
         return bonCreneau;

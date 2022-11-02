@@ -2,7 +2,10 @@ plugins {
 	id 'org.springframework.boot' version '2.7.4'
 	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
 	id 'java'
+	id 'checkstyle' //Pour avoir de l'analyse static
+	id 'war' //pour pouvoir package l'application en un fichier .war pour la déployer sur un serveur
 }
+
 
 group = 'com.docto'
 version = '0.0.1-SNAPSHOT'
@@ -11,7 +14,6 @@ sourceCompatibility = '17'
 repositories {
 	mavenCentral()
 }
-
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -27,7 +29,8 @@ dependencies {
 	implementation 'org.apache.logging.log4j:log4j-api:2.19.0'
 	implementation 'org.apache.logging.log4j:log4j-core:2.19.0'
 
-	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
+	//implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13' //Pour faire des requettes sur l'API REST
+
 
 	// Pour avoir une database mysql
 	//implementation group: 'mysql', name: 'mysql-connector-java', version: '5.1.13'
@@ -36,3 +39,5 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+

@@ -1,3 +1,4 @@
+/*
 package com.docto.protechdoctolib.creneaux;
 
 import org.apache.http.HttpResponse;
@@ -12,14 +13,14 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RESTAPIIntegrationTest {
+public class RESTAPIIntegrationTest {*/
 
     /***
      * Test if response in a json file
      * @throws ClientProtocolException
      * @throws IOException
      */
-    @Test
+    /*@Test
     public void
     testResponseIsJson()
             throws ClientProtocolException, IOException {
@@ -38,3 +39,4 @@ public class RESTAPIIntegrationTest {
 
 
 }
+*/
