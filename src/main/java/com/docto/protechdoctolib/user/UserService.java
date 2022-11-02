@@ -38,6 +38,8 @@ public class UserService implements UserDetailsService {
                 .isPresent();
 
         if (userExists){
+
+            // TODO if email not confirmed send again a confirmation email
             throw new IllegalStateException("email already taken");
         }
 
