@@ -4,10 +4,9 @@ package com.docto.protechdoctolib.creneaux;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 @Entity

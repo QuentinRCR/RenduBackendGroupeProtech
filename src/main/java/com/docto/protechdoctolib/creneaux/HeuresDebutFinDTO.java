@@ -1,10 +1,6 @@
 package com.docto.protechdoctolib.creneaux;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.Column;
 import java.time.LocalTime;
-import java.util.GregorianCalendar;
 
 public class HeuresDebutFinDTO {
 

@@ -4,7 +4,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalTime;
-import java.util.GregorianCalendar;
 
 /**
  * Definit une plage de temps dans un journée dans un créneau
