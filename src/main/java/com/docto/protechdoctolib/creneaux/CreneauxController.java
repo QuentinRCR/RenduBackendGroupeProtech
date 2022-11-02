@@ -1,6 +1,7 @@
 package com.docto.protechdoctolib.creneaux;
 
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -11,6 +12,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.stream.Collectors;
 
 @RestController // (1)
@@ -21,7 +24,7 @@ public class CreneauxController {
     private final CreneauxDAO creneauxDAO;
     private final HeuresDebutFinDAO heuresDebutFinDAO;
 
-    private final static Logger logger = LogManager.getLogger(CreneauxController.class);
+    private static final Logger logger = LogManager.getLogger(CreneauxController.class);
 
     public CreneauxController(CreneauxDAO creneauxDAO, HeuresDebutFinDAO heuresDebutFinDAO) {
         this.creneauxDAO = creneauxDAO;
@@ -46,7 +49,16 @@ public class CreneauxController {
     @GetMapping(path = "/{id}")
     public CreneauxDTO findById(@PathVariable Long id) {
         logger.info( "la fonction findById à été utilisé avec l'id "+id.toString());
-        return creneauxDAO.findById(id).map(CreneauxDTO::new).orElse(null);
+        CreneauxDTO creneauId= creneauxDAO.findById(id).map(CreneauxDTO::new).orElse(null);
+        if (creneauId==null){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "entity not found"
+            );
+        }
+        else{
+            return creneauId;
+        }
+
     }
 
     /**
@@ -61,6 +73,9 @@ public class CreneauxController {
         }
         catch (EmptyResultDataAccessException e){
             logger.warn("Le créneau à supprimé n'existe pas");
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "entity not found"
+            );
         }
     }
 
@@ -106,7 +121,9 @@ public class CreneauxController {
             }
             catch (EntityNotFoundException e){
                 logger.error("id créneau non trouvé, pour en créer un nouveau, mettre null pour son id");
-                return null;
+                throw new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "entity not found"
+                );
             }
         }
         return new CreneauxDTO(creneaux);

@@ -24,7 +24,7 @@ public class Creneaux {
     }
 
     /**
-     * Id du créneau
+     *Id du créneau
      */
      @Id
      @GeneratedValue
@@ -48,7 +48,7 @@ public class Creneaux {
      * Liste des jours pour lequels on peut prendre des rendez-vous
      */
 
-    @ElementCollection(targetClass=DayOfWeek.class)
+    @ElementCollection(targetClass = DayOfWeek.class)
     @Enumerated(EnumType.STRING)
     @Column
     private List<DayOfWeek> jours;
