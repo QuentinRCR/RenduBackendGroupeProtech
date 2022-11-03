@@ -1,4 +1,4 @@
-package com.docto.protechdoctolib.email;
+/*package com.docto.protechdoctolib.email;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,3 +39,4 @@ public class EmailService implements EmailSender{
         }
     }
 }
+*/

@@ -1,6 +1,6 @@
 package com.docto.protechdoctolib.registration;
 
-import com.docto.protechdoctolib.email.EmailSender;
+//import com.docto.protechdoctolib.email.EmailSender;
 import com.docto.protechdoctolib.registration.token.ConfirmationToken;
 import com.docto.protechdoctolib.registration.token.ConfirmationTokenService;
 import com.docto.protechdoctolib.user.User;
@@ -18,13 +18,13 @@ public class RegistrationService {
     private final UserService userService;
     private final ConfirmationTokenService confirmationTokenService;
 
-    private final EmailSender emailSender;
+    //private final EmailSender emailSender;
 
-    public RegistrationService(EmailValidator emailValidator, UserService userService, ConfirmationTokenService confirmationTokenService, EmailSender emailSender) {
+    public RegistrationService(EmailValidator emailValidator, UserService userService, ConfirmationTokenService confirmationTokenService/*, EmailSender emailSender*/) {
         this.emailValidator = emailValidator;
         this.userService = userService;
         this.confirmationTokenService = confirmationTokenService;
-        this.emailSender = emailSender;
+        //this.emailSender = emailSender;
     }
 
     public String register(RegistrationRequest request) {
@@ -42,8 +42,8 @@ public class RegistrationService {
                         UserRole.USER
                 ));
         // TODO : BON LIEN A METTRE
-        String link ="http://localhost:8080/api/v1/registration/" + token;
-        emailSender.send(request.getEmail(), buildEmail(request.getNom(), link));
+       /* String link ="http://localhost:8080/api/v1/registration/confirm?token=" + token;
+        emailSender.send(request.getEmail(), buildEmail(request.getNom(), link)); */
 
         return token;
     }

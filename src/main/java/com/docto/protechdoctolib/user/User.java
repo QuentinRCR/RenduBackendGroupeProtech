@@ -29,8 +29,9 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private Double phonenumber;
+
     @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+    private UserRole user_role;
     private Boolean locked= false;
     private Boolean enabled= false;
 
@@ -39,12 +40,12 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(Id, user.Id) && Objects.equals(nom, user.nom) && Objects.equals(prenom, user.prenom) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(phonenumber, user.phonenumber) && userRole == user.userRole && Objects.equals(locked, user.locked) && Objects.equals(enabled, user.enabled);
+        return Objects.equals(Id, user.Id) && Objects.equals(nom, user.nom) && Objects.equals(prenom, user.prenom) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(phonenumber, user.phonenumber) && user_role == user.user_role && Objects.equals(locked, user.locked) && Objects.equals(enabled, user.enabled);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, nom, prenom, email, password, phonenumber, userRole, locked, enabled);
+        return Objects.hash(Id, nom, prenom, email, password, phonenumber, user_role, locked, enabled);
     }
 
     public Long getId() {
@@ -89,7 +90,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority= new SimpleGrantedAuthority(userRole.name());
+        SimpleGrantedAuthority authority= new SimpleGrantedAuthority(user_role.name());
         return Collections.singletonList(authority);
     }
     @Override
@@ -126,12 +127,12 @@ public class User implements UserDetails {
 
     }
 
-    public User( String nom, String prenom, String email, String password, Double phonenumber, UserRole userRole) {
+    public User( String nom, String prenom, String email, String password, Double phonenumber, UserRole user_role) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.password = password;
         this.phonenumber = phonenumber;
-        this.userRole = userRole;
+        this.user_role = user_role;
     }
 }
