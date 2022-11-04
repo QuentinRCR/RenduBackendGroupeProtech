@@ -2,8 +2,6 @@ package com.docto.protechdoctolib.creneaux;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.minidev.json.JSONObject;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
@@ -76,7 +74,7 @@ public class RestAPIIntegrationTest {
         HttpResponse response = HttpClientBuilder.create().build().execute( request ); //execute the request
         String jsonFromResponse = EntityUtils.toString(response.getEntity()); //transforme the response to string
         ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        testdeserialise a= mapper.readValue(jsonFromResponse, testdeserialise.class); //map the response to the class CreneauDeserialisation
+        CreneauDeserialisation a= mapper.readValue(jsonFromResponse, CreneauDeserialisation.class); //map the response to the class CreneauDeserialisation
         Assertions.assertThat(a.getId()).isEqualTo(1000); //test that the id is equal to 1000
     }
 }
