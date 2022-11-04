@@ -1,5 +1,7 @@
 package com.docto.protechdoctolib.creneaux;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.JSONObject;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -9,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +34,7 @@ public class RestAPIIntegrationTest {
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute( request );
 
         // Then
-        Assertions.assertThat(httpResponse.getStatusLine().getStatusCode()).isEqualTo(HttpStatus.SC_NOT_FOUND);
+        Assertions.assertThat(httpResponse.getStatusLine().getStatusCode()).isEqualTo(HttpStatus.SC_NOT_FOUND); //test that the status code is correct
 
     }
 
@@ -53,25 +56,27 @@ public class RestAPIIntegrationTest {
         HttpResponse response = HttpClientBuilder.create().build().execute( request );
 
         // Then
-        String mimeType = ContentType.getOrDefault(response.getEntity()).getMimeType();
+        String mimeType = ContentType.getOrDefault(response.getEntity()).getMimeType(); //test that the returned document is a JSON
         Assertions.assertThat( jsonMimeType).isEqualTo(mimeType );
     }
 
-    /*@Test
+    /**
+     * Test that the json sent is the correct one (correct id)
+     * @throws ClientProtocolException
+     * @throws IOException
+     */
+    @Test
     public void
     givenUserExists_whenUserInformationIsRetrieved_thenRetrievedResourceIsCorrect()
             throws ClientProtocolException, IOException {
 
-        // Given
-        HttpUriRequest request = new HttpGet( "http://localhost:8080/api/creneaux/1000" );
+        HttpUriRequest request = new HttpGet( "http://localhost:8080/api/creneaux/1000" ); //create the request
 
         // When
-        HttpResponse response = HttpClientBuilder.create().build().execute( request );
-        HttpEntity a = response.getEntity();
-        // Then
-
-        GitHubUser resource = RetrieveUtil.retrieveResourceFromResponse(
-                response, GitHubUser.class);
-        assertThat( "eugenp", Matchers.is( resource.getLogin() ) );
-    }*/
+        HttpResponse response = HttpClientBuilder.create().build().execute( request ); //execute the request
+        String jsonFromResponse = EntityUtils.toString(response.getEntity()); //transforme the response to string
+        ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        testdeserialise a= mapper.readValue(jsonFromResponse, testdeserialise.class); //map the response to the class CreneauDeserialisation
+        Assertions.assertThat(a.getId()).isEqualTo(1000); //test that the id is equal to 1000
+    }
 }

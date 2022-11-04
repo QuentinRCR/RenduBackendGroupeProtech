@@ -30,7 +30,7 @@ dependencies {
 	implementation 'org.apache.logging.log4j:log4j-core:2.19.0'
 
 	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13' //Pour faire des requettes sur l'API REST
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.9'
+	//implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.9'
 }
 
 tasks.named('test') {
