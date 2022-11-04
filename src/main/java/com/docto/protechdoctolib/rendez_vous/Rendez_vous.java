@@ -5,7 +5,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 @Entity
@@ -23,6 +22,7 @@ public class Rendez_vous {
         this.moyenCommunication= moyenCommunication;
         this.zoomLink=zoomLink;
     }
+
 
     /**
      * Id du rdv
