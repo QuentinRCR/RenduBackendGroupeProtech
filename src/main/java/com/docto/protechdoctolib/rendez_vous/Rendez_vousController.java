@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.time.DayOfWeek;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 

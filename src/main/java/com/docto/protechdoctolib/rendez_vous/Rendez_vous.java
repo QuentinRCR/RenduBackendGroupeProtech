@@ -4,7 +4,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.Duration;
-import java.util.GregorianCalendar;
+import java.time.LocalDateTime;
+import java.util.List;
+
 
 @Entity
 public class Rendez_vous {
@@ -12,7 +14,7 @@ public class Rendez_vous {
     public Rendez_vous() {
     }
 
-    public Rendez_vous(Long id, Long idCreneau, Long idUser, GregorianCalendar dateDebut, Duration duree, String moyenCommunication, String zoomLink) {
+    public Rendez_vous(Long id, Long idCreneau, Long idUser, LocalDateTime dateDebut, Duration duree, String moyenCommunication, String zoomLink) {
         this.id = id;
         this.dateDebut = dateDebut;
         this.idCreneau= idCreneau;
@@ -57,8 +59,8 @@ public class Rendez_vous {
      * Heure de début de la plage de prise de rendez-vous pour la journée
      */
     @Column
-    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
-    private GregorianCalendar dateDebut;
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss[.SSS][.SS][.S]")
+    private LocalDateTime dateDebut;
 
     /**
      * lien zoom du rdv
@@ -109,11 +111,11 @@ public class Rendez_vous {
         this.moyenCommunication = moyenCommunication;
     }
 
-    public GregorianCalendar getDateDebut() {
+    public LocalDateTime getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(GregorianCalendar dateDebut) {
+    public void setDateDebut(LocalDateTime dateDebut) {
         this.dateDebut = dateDebut;
     }
 

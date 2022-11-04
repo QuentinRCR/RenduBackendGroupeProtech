@@ -2,8 +2,7 @@ package com.docto.protechdoctolib.rendez_vous;
 
 import java.time.DayOfWeek;
 import java.time.Duration;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Rendez_vousDTO {
@@ -16,7 +15,7 @@ public class Rendez_vousDTO {
 
     private String zoomLink;
 
-    private GregorianCalendar dateDebut;
+    private LocalDateTime dateDebut;
 
     private String moyenCommunication;
 
@@ -70,11 +69,11 @@ public class Rendez_vousDTO {
         this.zoomLink = zoomLink;
     }
 
-    public GregorianCalendar getDateDebut() {
+    public LocalDateTime getDateDebut() {
         return dateDebut;
     }
 
-    public void setDateDebut(GregorianCalendar dateDebut) {
+    public void setDateDebut(LocalDateTime dateDebut) {
         this.dateDebut = dateDebut;
     }
 
