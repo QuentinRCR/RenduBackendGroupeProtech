@@ -30,11 +30,10 @@ public class Rendez_vousDTO {
         this.id = rendez_vous.getId();
         this.dateDebut = rendez_vous.getDateDebut();
         this.idUser = rendez_vous.getIdUser();
-        this.dateDebut = getDateDebut();
         this.idCreneau = rendez_vous.getIdCreneau();
         this.duree = rendez_vous.getDuree();
         this.moyenCommunication = rendez_vous.getMoyenCommunication();
-        this.zoomLink = zoomLink;
+        this.zoomLink = rendez_vous.getZoomLink();
     }
 
     public Long getId() {
