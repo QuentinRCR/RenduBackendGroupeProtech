@@ -79,13 +79,13 @@ public class Rendez_vousController {
         Rendez_vous rendez_vous = null;
         // On creation id is not defined
         if (dto.getId() == null) {
-            rendez_vous = rendez_vousDAO.save(new Rendez_vous(dto.getId(), dto.getIdUser(), dto.getIdCreneau(), dto.getDateDebut(), dto.getDuree(), dto.getMoyenCommunication(),dto.getZoomLink()));
+            rendez_vous = rendez_vousDAO.save(new Rendez_vous(dto.getId(), dto.getIdCreneau(),dto.getIdUser(), dto.getDateDebut(), dto.getDuree(), dto.getMoyenCommunication(),dto.getZoomLink()));
         } else {
             rendez_vous = rendez_vousDAO.getReferenceById(dto.getId());  // (9)
             rendez_vous.setDateDebut(dto.getDateDebut());
-            rendez_vous.setIdUser(dto.getIdUser());
             rendez_vous.setIdCreneau(dto.getIdCreneau());
-            rendez_vous.setDuree(dto.getDuree());
+            rendez_vous.setIdUser(dto.getIdUser());
+            rendez_vous.setDuree(dto.getDuree()); /* mettre une durée dans le format "PT60S" ou "PT2M"...*/
             rendez_vous.setMoyenCommunication(dto.getMoyenCommunication());
             rendez_vous.setZoomLink(dto.getZoomLink());
 
