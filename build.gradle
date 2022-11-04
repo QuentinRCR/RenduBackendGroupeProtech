@@ -2,7 +2,10 @@ plugins {
 	id 'org.springframework.boot' version '2.7.4'
 	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
 	id 'java'
+	id 'checkstyle' //Pour avoir de l'analyse static
+	id 'war' //pour pouvoir package l'application en un fichier .war pour la déployer sur un serveur
 }
+
 
 group = 'com.docto'
 version = '0.0.1-SNAPSHOT'
@@ -18,11 +21,18 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // libs to use JPA in your project
 	implementation 'com.h2database:h2' // libs to use a H2 database
-	//implementation 'io.springfox:springfox-boot-starter:3.0.0'
-	//implementation("org.springframework.boot:spring-boot-starter-security")
-	//testImplementation("org.springframework.security:spring-security-test")
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+	// pour avoir log4j
+	implementation 'org.apache.logging.log4j:log4j-api:2.19.0'
+	implementation 'org.apache.logging.log4j:log4j-core:2.19.0'
+
+	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13' //Pour faire des requettes sur l'API REST
+	//implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.9'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+
