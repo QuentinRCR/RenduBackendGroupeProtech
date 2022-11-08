@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -89,13 +90,16 @@ public class CreneauxController {
     public CreneauxDTO create_or_modify(@RequestBody CreneauxDTO dto) {
         Creneaux creneaux = null;
         HeuresDebutFin heuresDebutFin1 = null;
+        List listHeureDebutFin =new ArrayList<>();
         // On creation id is not defined
         if (dto.getId() == null) {
             creneaux = creneauxDAO.save(new Creneaux(null,dto.getDateDebut(),dto.getDateFin(),dto.getJours(),dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList()))); //la dernière partie sert uniquement à ce que swagger renvoie la bonne chose
             for(HeuresDebutFin heuresDebutFin : dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList())){ //On ajoute chaque element de la liste des heuresDebutFin à la table correspondante
                 heuresDebutFin.setIdCreneaux(creneaux.getId());
-                heuresDebutFinDAO.save(heuresDebutFin);
+                HeuresDebutFin saved =heuresDebutFinDAO.save(heuresDebutFin);
+                listHeureDebutFin.add(saved);
             }
+
             logger.info( "un nouveau créneau a été crée, il a pour id "+creneaux.getId().toString());
         }
         else {
@@ -110,11 +114,12 @@ public class CreneauxController {
                 for (HeuresDebutFin ancienheuresDebutFin : heuresDebutFinDAO.findByIdCreneaux(dto.getId())) { //supprime tout les anciens créneaux
                     heuresDebutFinDAO.deleteById(ancienheuresDebutFin.getIdPlage());
                 }
+
                 for (HeuresDebutFin heuresDebutFin : dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList())) { //Crée les nouveaux créneaux
                     heuresDebutFin.setIdCreneaux(creneaux.getId());
-                    heuresDebutFinDAO.save(heuresDebutFin);
+                    HeuresDebutFin save= heuresDebutFinDAO.save(heuresDebutFin);
+                    listHeureDebutFin.add(save);
                 }
-                creneaux.setHeuresDebutFin(dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList()));
 
                 logger.info("le créneau avec l'id " + creneaux.getId().toString() + " a été modifié");
 
@@ -126,6 +131,7 @@ public class CreneauxController {
                 );
             }
         }
+        creneaux.setHeuresDebutFin(listHeureDebutFin);
         return new CreneauxDTO(creneaux);
     }
 
