@@ -35,18 +35,18 @@ public class Rendez_vousController {
      * Renvoit le rdv ayant pour id le paramètre
      *
      * @param id
-     * @return creneau
+     * @return rdv
      */
     @GetMapping(path = "/{id}")
     public Rendez_vousDTO findById(@PathVariable Long id) {
-        Rendez_vousDTO creneauId= rendez_vousDAO.findById(id).map(Rendez_vousDTO::new).orElse(null);
-        if (creneauId==null){
+        Rendez_vousDTO rendez_vousId= rendez_vousDAO.findById(id).map(Rendez_vousDTO::new).orElse(null);
+        if (rendez_vousId==null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "entity not found"
             );
         }
         else{
-            return creneauId;
+            return rendez_vousId;
         }
 
     }
