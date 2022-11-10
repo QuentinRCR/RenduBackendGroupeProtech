@@ -1,6 +1,7 @@
 package com.docto.protechdoctolib.logging.token;
 
 import com.docto.protechdoctolib.registration.token.ConfirmationToken;
+import com.docto.protechdoctolib.user.User;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -15,11 +16,6 @@ import java.util.Optional;
 @Qualifier("ConnectionTokens")
 @Repository
 public interface ConnectionTokenRepository extends JpaRepository <ConnectionToken, Long> {
-
-        @Transactional
-        @Modifying
-        @Query(value = "SELECT u FROM User u where u.email = ?1 and u.password = ?2 ")
-        Optional login(String username,String password);
-        Optional findByToken(String token);
+        Optional<ConnectionToken> findByToken(String token);
 
 }
