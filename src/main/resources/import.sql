@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+-- creneaux
 INSERT INTO CRENEAUX(id,date_Debut, date_Fin) VALUES(2000,{ts '2022-10-10 00:00:00.00'}, {ts '2022-10-22 23:59:59.99'});
 INSERT INTO CRENEAUX(id,date_Debut, date_Fin) VALUES(1000,{ts '2022-11-22 00:00:00.00'}, {ts '2022-11-30 23:59:59.99'});
 
@@ -10,9 +10,9 @@ INSERT INTO HEURES_DEBUT_FIN (id_plage,ID_CRENEAUX ,TEMPS_DEBUT , TEMPS_FIN ) VA
 INSERT INTO CRENEAUX_JOURS(CRENEAUX_ID ,JOURS ) VALUES(2000,'MONDAY');
 INSERT INTO CRENEAUX_JOURS(CRENEAUX_ID ,JOURS ) VALUES(2000,'TUESDAY');
 INSERT INTO CRENEAUX_JOURS(CRENEAUX_ID ,JOURS ) VALUES(1000,'FRIDAY');
-=======
+
+
+--Rendez-vous
 INSERT INTO RENDEZ_VOUS(id,date_Debut, id_User, id_Creneau,duree, moyen_Communication, zoom_Link) VALUES(-1,{ts '2022-10-16 00:00:00.00'}, 2, 3,4000000000,'zoom','link.fr');
-
-
 INSERT INTO RENDEZ_VOUS(id,date_Debut, id_User, id_Creneau,duree, moyen_Communication, zoom_Link) VALUES(-2,{ts '2022-09-16 00:00:00.00'}, 3, 4,50,'zoom','link.fr');
->>>>>>> origin/WIP-1107-Ajout_Gestion_rdv
+
