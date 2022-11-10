@@ -34,29 +34,30 @@ public class CreneauxController {
 
     /**
      * Donne la liste de tous les créneaux
+     *
      * @return une liste de tous les créneaux
      */
     @GetMapping
-    public List<CreneauxDTO> findAll(){
+    public List<CreneauxDTO> findAll() {
         logger.info("la fonction findAll à été utilisé");
         return creneauxDAO.findAll().stream().map(CreneauxDTO::new).collect(Collectors.toList());
     }
 
     /**
      * Renvoit le créneau ayant pour id le paramètre
+     *
      * @param id
      * @return creneau
      */
     @GetMapping(path = "/{id}")
     public CreneauxDTO findById(@PathVariable Long id) {
-        logger.info( "la fonction findById à été utilisé avec l'id "+id.toString());
-        CreneauxDTO creneauId= creneauxDAO.findById(id).map(CreneauxDTO::new).orElse(null);
-        if (creneauId==null){
+        logger.info("la fonction findById à été utilisé avec l'id " + id.toString());
+        CreneauxDTO creneauId = creneauxDAO.findById(id).map(CreneauxDTO::new).orElse(null);
+        if (creneauId == null) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "entity not found"
             );
-        }
-        else{
+        } else {
             return creneauId;
         }
 
@@ -64,15 +65,15 @@ public class CreneauxController {
 
     /**
      * Supprime le créneau ayant pour id le paramètre
+     *
      * @param id
      */
     @DeleteMapping(path = "/{id}")
     public void deleteParId(@PathVariable Long id) {
-        logger.info( "le créneau avec l'id "+id.toString()+" a été supprimé");
-        try{
+        logger.info("le créneau avec l'id " + id.toString() + " a été supprimé");
+        try {
             creneauxDAO.deleteById(id);
-        }
-        catch (EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             logger.warn("Le créneau à supprimé n'existe pas");
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "entity not found"
@@ -83,6 +84,7 @@ public class CreneauxController {
 
     /**
      * Prend un dto de créneau en paramètre, crée ce creneau dans la db si son id est null et le modifie si son id existe déjà
+     *
      * @param dto
      * @return le dto du créneau crée
      */
@@ -90,19 +92,18 @@ public class CreneauxController {
     public CreneauxDTO create_or_modify(@RequestBody CreneauxDTO dto) {
         Creneaux creneaux = null;
         HeuresDebutFin heuresDebutFin1 = null;
-        List listHeureDebutFin =new ArrayList<>();
+        List listHeureDebutFin = new ArrayList<>();
         // On creation id is not defined
         if (dto.getId() == null) {
-            creneaux = creneauxDAO.save(new Creneaux(null,dto.getDateDebut(),dto.getDateFin(),dto.getJours(),dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList()))); //la dernière partie sert uniquement à ce que swagger renvoie la bonne chose
-            for(HeuresDebutFin heuresDebutFin : dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList())){ //On ajoute chaque element de la liste des heuresDebutFin à la table correspondante
+            creneaux = creneauxDAO.save(new Creneaux(null, dto.getDateDebut(), dto.getDateFin(), dto.getJours(), dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList()))); //la dernière partie sert uniquement à ce que swagger renvoie la bonne chose
+            for (HeuresDebutFin heuresDebutFin : dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList())) { //On ajoute chaque element de la liste des heuresDebutFin à la table correspondante
                 heuresDebutFin.setIdCreneaux(creneaux.getId());
-                HeuresDebutFin saved =heuresDebutFinDAO.save(heuresDebutFin);
+                HeuresDebutFin saved = heuresDebutFinDAO.save(heuresDebutFin);
                 listHeureDebutFin.add(saved);
             }
 
-            logger.info( "un nouveau créneau a été crée, il a pour id "+creneaux.getId().toString());
-        }
-        else {
+            logger.info("un nouveau créneau a été crée, il a pour id " + creneaux.getId().toString());
+        } else {
             try {
                 creneaux = creneauxDAO.getReferenceById(dto.getId());  // (9)
                 creneaux.setDateDebut(dto.getDateDebut());
@@ -117,14 +118,13 @@ public class CreneauxController {
 
                 for (HeuresDebutFin heuresDebutFin : dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList())) { //Crée les nouveaux créneaux
                     heuresDebutFin.setIdCreneaux(creneaux.getId());
-                    HeuresDebutFin save= heuresDebutFinDAO.save(heuresDebutFin);
+                    HeuresDebutFin save = heuresDebutFinDAO.save(heuresDebutFin);
                     listHeureDebutFin.add(save);
                 }
 
                 logger.info("le créneau avec l'id " + creneaux.getId().toString() + " a été modifié");
 
-            }
-            catch (EntityNotFoundException e){
+            } catch (EntityNotFoundException e) {
                 logger.error("id créneau non trouvé, pour en créer un nouveau, mettre null pour son id");
                 throw new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "entity not found"
@@ -134,61 +134,4 @@ public class CreneauxController {
         creneaux.setHeuresDebutFin(listHeureDebutFin);
         return new CreneauxDTO(creneaux);
     }
-
-
-
-    /**
-     * Prend un LocalDateTime de rendez-vous en paramètre et renvoit l'id du créneau correspondant s'il existe et null sinon
-     * @param dateDebutRDV,duree
-     * @return id du créneau corespondant et null sinon
-     */
-
-    /**
-     * Cherche si il y a un créneau future dans le rendez-vous commencant à dateDebutRDV et d'une durée dureee qui correspond à ce rendez-vous
-     * @param dateDebutRDV
-     * @param duree
-     * @return
-     */
-    public CreneauxDTO isWithinASlot(LocalDateTime dateDebutRDV, Duration duree){
-        return isWithinASlot(dateDebutRDV,duree,LocalDate.now());
-    }
-
-    /**
-     * Cherche si il y a un créneau après dateDebutRecherche la date  dans le rendez-vous commencant à dateDebutRDV et d'une durée dureee qui correspond à ce rendez-vous
-     * @param dateDebutRDV
-     * @param duree
-     * @param dateDebutRecherche
-     * @return
-     */
-    public CreneauxDTO isWithinASlot(LocalDateTime dateDebutRDV, Duration duree, LocalDate dateDebutRecherche){
-        logger.info( "un créneau pour un rendez-vous le "+dateDebutRDV.toString()+" d'une durée de "+duree.toString()+ "après la date de "+dateDebutRecherche.toString()+" a été cherché");
-
-        LocalDateTime dateFinRDV= dateDebutRDV.plus(duree);
-
-        CreneauxDTO bonCreneau=null;
-        for (Creneaux creneau : creneauxDAO.findCreneauxAfterDate(dateDebutRecherche)){
-            if (
-                    (creneau.getJours().contains(dateDebutRDV.getDayOfWeek())) &&
-                    (dateDebutRDV.toLocalDate().isAfter(creneau.getDateDebut())) || (dateDebutRDV.toLocalDate().equals(creneau.getDateDebut())) &&
-                    (dateFinRDV.toLocalDate().isBefore(creneau.getDateFin())) || (dateDebutRDV.toLocalDate().equals(creneau.getDateDebut()))
-            ){
-                for (HeuresDebutFin plage:creneau.getHeuresDebutFin()){
-                    if (
-                            (dateDebutRDV.toLocalTime().isAfter(plage.getTempsDebut())) || (dateDebutRDV.toLocalTime().equals(plage.getTempsDebut())) &&
-                            (dateFinRDV.toLocalTime().isBefore(plage.getTempsFin())) || (dateFinRDV.toLocalTime().equals(plage.getTempsFin()))
-                    ){
-                        bonCreneau=new CreneauxDTO(creneau);
-                    }
-                }
-
-            }
-        }
-        if(bonCreneau != null && logger.isDebugEnabled()){
-            logger.info("Le créneau "+bonCreneau.getId().toString()+" correspond");
-        } else if (logger.isDebugEnabled()) {
-            logger.info("Aucun créneau ne correspond");
-        }
-        return bonCreneau;
-    }
-
 }
