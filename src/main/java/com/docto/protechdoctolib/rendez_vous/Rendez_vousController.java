@@ -59,7 +59,11 @@ public class Rendez_vousController {
         else{
             return rendez_vousId;
         }
+    }
 
+    @GetMapping(path = "/user/{idUser}")
+    public List<Rendez_vousDTO> findAllByClientId(@PathVariable Long idUser) {
+        return rendez_vousDAO.findAllByIdUser(idUser).stream().map(Rendez_vousDTO::new).collect(Collectors.toList());
     }
 
 

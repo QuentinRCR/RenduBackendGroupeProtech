@@ -43,37 +43,45 @@ public class Rendez_vousDAOtest {
     }
 
     /**
-     * Teste si la liste de rdv retournée a bien une taille de 2 comme dans le import.sql
+     * Teste si la liste de rdv retournée a bien une taille de 3 comme dans le import.sql
      */
     @Test
-    public void shouldFind2Creneaux() {
+    public void shouldFind3RDV() {
         List<Rendez_vous> rdvs = rendez_vousDAO.findAll();
-        Assertions.assertThat(rdvs.size()).isEqualTo(2);
+        Assertions.assertThat(rdvs.size()).isEqualTo(3);
     }
 
     /**
-     * Teste si ça supprime bien le créneaux ayant pour id 1
+     * Teste si ça supprime bien le RDV ayant pour id -1
      */
     @Test
-    public void shouldDeleteCreneaux(){
+    public void shouldDeleteRDV(){
         rendez_vousDAO.deleteById(-1L);
         List<Rendez_vous> rdvs = rendez_vousDAO.findAll();
-        Assertions.assertThat(rdvs.size()).isEqualTo(1);
-        Assertions.assertThat(rdvs.get(0).getId()).isEqualTo(-2);
+        Assertions.assertThat(rdvs.size()).isEqualTo(2);
+        Assertions.assertThat(rdvs.get(0).getId()).isEqualTo(-3);
     }
 
     /**
-     * Teste si ça modifie bien le temps de fin du créneau ayant l'id 1
+     * Teste si ça modifie bien le temps de fin du RDV ayant l'id -1
      */
     @Test
-    public void shoudModifyCreneau1(){
+    public void shoudModifyRDV1(){
         Rendez_vous rendez_vous = rendez_vousDAO.getReferenceById(-1L);
         rendez_vous.setDateDebut(LocalDateTime.of(2695,12,30,0,0,1));
         Rendez_vous rendez_vous1 = rendez_vousDAO.getReferenceById(-1L);
         Assertions.assertThat(rendez_vous1.getDateDebut()).isEqualTo(LocalDateTime.of(2695,12,30,0,0,1));
     }
 
-
+    /**
+     * Test qu'on obtient bien les créneaux avec le bon idClient
+     */
+    @Test
+    public void shouldGetRDVForClientId3(){
+        List<Rendez_vous> listRendezVous = rendez_vousDAO.findAllByIdUser(3L);
+        Assertions.assertThat(listRendezVous.size()).isEqualTo(2);
+        Assertions.assertThat(listRendezVous.get(0).getIdUser()).isEqualTo(3L);
+    }
 
 
 }

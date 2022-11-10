@@ -26,7 +26,7 @@ public class CreneauxDAOtest {
     private  HeuresDebutFinDAO heuresDebutFinDAO;
 
     /**
-     * Teste si le créneaux 1 contient bien les bonnes informations
+     * Teste si le créneaux 1000 contient bien les bonnes informations
       */
     @Test
     public void shouldFindACreaneau() {
@@ -55,7 +55,7 @@ public class CreneauxDAOtest {
     }
 
     /**
-     * Teste si ça supprime bien le créneaux ayant pour id 1
+     * Teste si ça supprime bien le créneaux ayant pour id 1000
      */
     @Test
     public void shouldDeleteCreneaux(){
@@ -66,7 +66,7 @@ public class CreneauxDAOtest {
     }
 
     /**
-     * Teste si ça modifie bien le temps de fin du créneau ayant l'id 1
+     * Teste si ça modifie bien le temps de fin du créneau ayant l'id 1000
      */
     @Test
     public void shoudModifyCreneau1(){
@@ -76,9 +76,12 @@ public class CreneauxDAOtest {
         Assertions.assertThat(creneaux1.getDateDebut()).isEqualTo(LocalDate.of(2695,12,30));
     }
 
+    /**
+     * Test que la fonction findCreneauxAfterDate trouve bien uniquement les créneaux après une certaine date
+     */
     @Test
     public void findCreneauxAfterDate(){
         List<Creneaux> creneaux = creneauxDAO.findCreneauxAfterDate(LocalDate.of(2022,10,11));
-        Assertions.assertThat(creneaux.get(0).getId()).isEqualTo(1000L);
+        Assertions.assertThat(creneaux.get(0).getDateDebut()).isAfter(LocalDate.of(2022,10,11));
     }
 }
