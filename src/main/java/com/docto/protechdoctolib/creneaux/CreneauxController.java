@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController // (1)
 @RequestMapping("/api/creneaux") // (2)
 @Transactional // (3)

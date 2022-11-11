@@ -3,9 +3,9 @@ package com.docto.protechdoctolib.registration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+@CrossOrigin
 @RestController
-@RequestMapping(path = "api/v1/registration")
+@RequestMapping(path = "api/registration")
 public class RegistrationController {
 
     @Autowired
