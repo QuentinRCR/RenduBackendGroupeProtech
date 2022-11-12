@@ -1,5 +1,7 @@
 package com.docto.protechdoctolib.creneaux;
 
+import com.docto.protechdoctolib.rendez_vous.Rendez_vous;
+import com.docto.protechdoctolib.rendez_vous.Rendez_vousDAO;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -26,11 +28,14 @@ public class CreneauxController {
     private final CreneauxDAO creneauxDAO;
     private final HeuresDebutFinDAO heuresDebutFinDAO;
 
+    private final Rendez_vousDAO rendez_vousDAO;
+
     private static final Logger logger = LogManager.getLogger(CreneauxController.class);
 
-    public CreneauxController(CreneauxDAO creneauxDAO, HeuresDebutFinDAO heuresDebutFinDAO) {
+    public CreneauxController(CreneauxDAO creneauxDAO, HeuresDebutFinDAO heuresDebutFinDAO, Rendez_vousDAO rendez_vousDAO) {
         this.creneauxDAO = creneauxDAO;
         this.heuresDebutFinDAO = heuresDebutFinDAO;
+        this.rendez_vousDAO = rendez_vousDAO;
     }
 
     /**
@@ -74,6 +79,10 @@ public class CreneauxController {
         logger.info("le créneau avec l'id " + id.toString() + " a été supprimé");
         try {
             creneauxDAO.deleteById(id);
+            List<Rendez_vous> listRendezVous = rendez_vousDAO.findAllByIdCreneau(id);
+            for (Rendez_vous rdv: listRendezVous){
+                rendez_vousDAO.deleteById(rdv.getId());
+            };
         } catch (EmptyResultDataAccessException e) {
             logger.warn("Le créneau à supprimé n'existe pas");
             throw new ResponseStatusException(

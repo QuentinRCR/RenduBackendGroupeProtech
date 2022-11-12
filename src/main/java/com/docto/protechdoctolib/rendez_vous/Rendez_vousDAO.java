@@ -14,4 +14,7 @@ public interface Rendez_vousDAO extends JpaRepository<Rendez_vous, Long> {
     @Query("select c from Rendez_vous c where c.idUser=:idClient")  // (2)
     List<Rendez_vous> findAllByIdUser(@Param("idClient") Long idClient);
 
+    @Query("select c from Rendez_vous c where c.idCreneau=:idCreneau")  // (2)
+    List<Rendez_vous> findAllByIdCreneau(@Param("idCreneau") Long idCreneau);
+
 }

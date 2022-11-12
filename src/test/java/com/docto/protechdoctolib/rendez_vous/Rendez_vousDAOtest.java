@@ -83,5 +83,12 @@ public class Rendez_vousDAOtest {
         Assertions.assertThat(listRendezVous.get(0).getIdUser()).isEqualTo(3L);
     }
 
+    @Test
+    public void shouldGetAppointementsWithIDCreneau4(){
+        List<Rendez_vous> listRendezVous = rendez_vousDAO.findAllByIdCreneau(4L);
+        Assertions.assertThat(listRendezVous.size()).isEqualTo(2);
+        Assertions.assertThat(listRendezVous.get(0).getIdCreneau()).isEqualTo(4L);
+    }
+
 
 }
