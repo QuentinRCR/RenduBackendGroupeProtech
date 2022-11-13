@@ -15,10 +15,12 @@ Then, on your web browser, go to `localhost:8080/`. You will be prompted to ente
 ### What is it doing
 This project is the backend of an appointment scheduler. It deploys a REST API (by default on `localhost/8080`). It contains:
 - Spring security with a registration API that asks for confirmation by email when a new account is created.
-- A time-slot manager API that allows to create/delete/modify/find by id/find all time-slots in which clients can make appointments.
-- An appointment manager API that allows to create/delete/modify/find by id/find all appointments made.
+- A time-slot manager API that allows to **create**/**modify**/**delete**/**modify**/**find by id**/**find all** time-slots in which clients can make appointments.
+- An appointment manager API that allows to **create**/**modify**/**delete**/**modify**/**find by id**/**find all**/**find all by client id** appointments made.
 
-Eventually, the project will allow different access rights depending on the role of the person logged in.
+This project has different access rights that allow users to access only some API. This feature is not implemented yet.
+
+> :warning: **For create and modification apis**: The default json proposed by swagger is not correct. Please use the formatting returned by the findById method. 
 
 ### Use
 This repo is used by students of Mines Saint-Étienne Engineering school.
