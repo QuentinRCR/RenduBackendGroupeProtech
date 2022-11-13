@@ -39,7 +39,6 @@ public class UserService implements UserDetailsService {
 
         if (userExists){
 
-            // TODO if email not confirmed send again a confirmation email
             throw new IllegalStateException("email already taken");
         }
 
@@ -59,7 +58,6 @@ public class UserService implements UserDetailsService {
         );
 
         confirmationTokenService.saveConfirmationToken(confirmationToken);
-//      TODO: SEND EMAIL
         return token;
     }
 
