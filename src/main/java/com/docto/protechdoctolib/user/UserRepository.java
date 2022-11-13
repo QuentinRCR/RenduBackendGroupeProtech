@@ -14,6 +14,12 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
+    /** Active le compte de l'utilisateur quande celui ci va faire une requête GET à l'API
+     * avec le token de confirmation qu'il reçoit lorsqu'il poste une reqête d'inscription
+     * Cette reqûete GET se fera par la suite en cliquant sur un lien de confirmation d'email
+     * mais le système d'envoi de mail n'est pas envore configuré
+     */
+
     @Transactional
     @Modifying
     @Query("UPDATE User u " +

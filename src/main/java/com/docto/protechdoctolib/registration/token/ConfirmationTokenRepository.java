@@ -16,6 +16,9 @@ public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationT
 
     Optional<ConfirmationToken> findByToken(String token);
 
+    /** Reqête pour rentrer la date de confirmation du token dans la database.
+     */
+
     @Transactional
     @Modifying
     @Query("UPDATE ConfirmationToken c " +

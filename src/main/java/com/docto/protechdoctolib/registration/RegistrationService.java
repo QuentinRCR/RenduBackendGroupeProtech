@@ -24,6 +24,10 @@ public class RegistrationService {
         this.confirmationTokenService = confirmationTokenService;
     }
 
+    /** Si l'email est valide selon les contraintes de email validator, la requête est exécutée et l'utilisateur est enregistré.
+     * @param request
+     * @return token de confirmation qui est généré.
+     */
     public String register(RegistrationRequest request) {
         boolean isValidEmail = emailValidator.test(request.getEmail());
         if (!isValidEmail){
@@ -42,6 +46,11 @@ public class RegistrationService {
         return token;
     }
 
+    /** Si le token existe, que l'email n'est pas déjà confirmé et que le token n'a pas expiré,
+     * le compte de l'utilisateur qui a généré ce token est activé
+     * @param token
+     * @return
+     */
     @Transactional
     public String confirmToken(String token){
         ConfirmationToken confirmationToken = confirmationTokenService

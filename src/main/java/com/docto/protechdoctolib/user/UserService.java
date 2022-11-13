@@ -33,6 +33,12 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND,email)));
     }
 
+    /** Fonction d'inscription
+     * si l'email de la requête n'a pas déjà été pris par un autre utilisateur
+     * Le mdp est crypté, l'utilisteur est sauvegardé et un token de confirmation est crée.
+     * @param user
+     * @return token de confirmation
+     */
     public String signUpUser(User user){
         boolean userExists = userRepository.findByEmail(user.getEmail())
                 .isPresent();
@@ -61,6 +67,10 @@ public class UserService implements UserDetailsService {
         return token;
     }
 
+    /**
+     * Active le compte de l'utilisateur avec l'email en paramètre.
+     * @param email
+     */
     public int enableAppUser(String email) {
         return userRepository.enableUser(email);
     }

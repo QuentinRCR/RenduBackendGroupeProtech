@@ -32,21 +32,18 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private UserRole user_role;
+    /**
+     * La fonctionnalité locked n'est pas utilisé dans le projet ici mais permettrait de bloquer un compte
+     * après des tentatives de mdp échouées répétées par exemple
+     */
     private Boolean locked= false;
+    /**
+     * Tant que enabled=false l'utilisateur ne peut pas utiliser son compte
+     * Le but est d'activer le compte de l'utilisateur une fois son email validé
+     * Le système d'envoi d'email n'est pas encore configuré mais cette fonctionnalité fonctionne
+     * via un système de tokens déjà opérationnel
+     */
     private Boolean enabled= false;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(Id, user.Id) && Objects.equals(nom, user.nom) && Objects.equals(prenom, user.prenom) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(phonenumber, user.phonenumber) && user_role == user.user_role && Objects.equals(locked, user.locked) && Objects.equals(enabled, user.enabled);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(Id, nom, prenom, email, password, phonenumber, user_role, locked, enabled);
-    }
 
     public Long getId() {
         return Id;
@@ -88,6 +85,8 @@ public class User implements UserDetails {
         this.phonenumber = phonenumber;
     }
 
+    /** Collecte les différents rôles existants et demande l'authentification pour ces rôles
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority= new SimpleGrantedAuthority(user_role.name());
