@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalTime;
 
 /**
- * Definit une plage de temps dans un journée dans un créneau
+ * Définit une plage de temps dans une journée (ex: entre 8h et 12h)
  */
 @Entity
 public class HeuresDebutFin {
@@ -32,7 +32,9 @@ public class HeuresDebutFin {
     @GeneratedValue
     private Long idPlage;
 
-
+    /**
+     * Id du créneau auquel la plage correspond
+     */
     private  Long idCreneaux;
 
     @Column

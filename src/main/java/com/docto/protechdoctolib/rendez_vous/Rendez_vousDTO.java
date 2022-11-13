@@ -22,7 +22,7 @@ public class Rendez_vousDTO {
     private Duration duree;
 
 
-    //Ce constructeur est necessaire à spring
+    //Ce constructeur est nécessaire à spring
     public Rendez_vousDTO() {
     }
 

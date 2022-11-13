@@ -56,7 +56,7 @@ public class Rendez_vous {
     private String moyenCommunication;
 
     /**
-     * Heure de début de la plage de prise de rendez-vous pour la journée
+     * Date et heure du début du rendez-vous
      */
     @Column
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss[.SSS][.SS][.S]")

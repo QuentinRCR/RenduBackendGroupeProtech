@@ -45,14 +45,16 @@ public class Creneaux {
      private LocalDate dateFin;
 
     /**
-     * Liste des jours pour lequels on peut prendre des rendez-vous
+     * Liste des jours pour lesquels on peut prendre des rendez-vous
      */
-
     @ElementCollection(targetClass = DayOfWeek.class)
     @Enumerated(EnumType.STRING)
     @Column
     private List<DayOfWeek> jours;
 
+    /**
+     * Plages de temps pendant lesquels on peut prendre un rendez-vous. Ex: entre 8h et 12h et entre 14h et 18h
+     */
     @OneToMany(mappedBy = "idCreneaux")
     private List<HeuresDebutFin> heuresDebutFin;
 

@@ -19,10 +19,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.stream.Collectors;
 
-@CrossOrigin
-@RestController // (1)
-@RequestMapping("/api/creneaux") // (2)
-@Transactional // (3)
+@CrossOrigin //to allow cross-origin request from the vue application to the backend (hosted on the same computer)
+@RestController
+@RequestMapping("/api/creneaux")
+@Transactional
 public class CreneauxController {
 
     private final CreneauxDAO creneauxDAO;
@@ -50,17 +50,17 @@ public class CreneauxController {
     }
 
     /**
-     * Renvoit le créneau ayant pour id le paramètre
+     * Renvoi le créneau ayant pour id le paramètre
      *
      * @param id
-     * @return creneau
+     * @return créneau
      */
     @GetMapping(path = "/{id}")
     public CreneauxDTO findById(@PathVariable Long id) {
         logger.info("la fonction findById à été utilisé avec l'id " + id.toString());
         CreneauxDTO creneauId = creneauxDAO.findById(id).map(CreneauxDTO::new).orElse(null);
         if (creneauId == null) {
-            throw new ResponseStatusException(
+            throw new ResponseStatusException( //if not found throw 404 error
                     HttpStatus.NOT_FOUND, "entity not found"
             );
         } else {
@@ -70,17 +70,17 @@ public class CreneauxController {
     }
 
     /**
-     * Supprime le créneau ayant pour id le paramètre
+     * Supprime le créneau ayant pour id le paramètre et supprime tous les rendez-vous qui se trouvaient dans ce créneau
      *
-     * @param id
+     * @param id id du créneau à supprimer
      */
     @DeleteMapping(path = "/{id}")
     public void deleteParId(@PathVariable Long id) {
         logger.info("le créneau avec l'id " + id.toString() + " a été supprimé");
         try {
-            creneauxDAO.deleteById(id);
-            List<Rendez_vous> listRendezVous = rendez_vousDAO.findAllByIdCreneau(id);
-            for (Rendez_vous rdv: listRendezVous){
+            creneauxDAO.deleteById(id); //delete the slot
+            List<Rendez_vous> listRendezVous = rendez_vousDAO.findAllByIdCreneau(id); //get appointments that where registered in this slot
+            for (Rendez_vous rdv: listRendezVous){ //Delete them
                 rendez_vousDAO.deleteById(rdv.getId());
             };
         } catch (EmptyResultDataAccessException e) {
@@ -93,7 +93,7 @@ public class CreneauxController {
 
 
     /**
-     * Prend un dto de créneau en paramètre, crée ce creneau dans la db si son id est null et le modifie si son id existe déjà
+     * Prend un dto de créneau en paramètre, crée ce créneau dans la db si son id est null et le modifie si son id existe déjà
      *
      * @param dto
      * @return le dto du créneau crée
@@ -102,31 +102,32 @@ public class CreneauxController {
     public CreneauxDTO create_or_modify(@RequestBody CreneauxDTO dto) {
         Creneaux creneaux = null;
         HeuresDebutFin heuresDebutFin1 = null;
-        List listHeureDebutFin = new ArrayList<>();
+        List listHeureDebutFin = new ArrayList<>(); //To store what is added in order to return the corrected dto
+
         // On creation id is not defined
         if (dto.getId() == null) {
-            creneaux = creneauxDAO.save(new Creneaux(null, dto.getDateDebut(), dto.getDateFin(), dto.getJours(), dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList()))); //la dernière partie sert uniquement à ce que swagger renvoie la bonne chose
-            for (HeuresDebutFin heuresDebutFin : dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList())) { //On ajoute chaque element de la liste des heuresDebutFin à la table correspondante
-                heuresDebutFin.setIdCreneaux(creneaux.getId());
+            creneaux = creneauxDAO.save(new Creneaux(null, dto.getDateDebut(), dto.getDateFin(), dto.getJours(), dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList()))); //Create new slot
+            for (HeuresDebutFin heuresDebutFin : dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList())) { //add each element from the list of heuresDebutFin to the corresponding db
+                heuresDebutFin.setIdCreneaux(creneaux.getId()); //Assign the correct slot id
                 HeuresDebutFin saved = heuresDebutFinDAO.save(heuresDebutFin);
                 listHeureDebutFin.add(saved);
             }
 
             logger.info("un nouveau créneau a été crée, il a pour id " + creneaux.getId().toString());
-        } else {
+        } else { //modify slot (id is not null)
             try {
-                creneaux = creneauxDAO.getReferenceById(dto.getId());  // (9)
+                creneaux = creneauxDAO.getReferenceById(dto.getId());  // Assign each of the new values
                 creneaux.setDateDebut(dto.getDateDebut());
                 creneaux.setDateFin(dto.getDateFin());
                 creneaux.setJours(dto.getJours());
                 creneaux.setHeuresDebutFin(dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList()));
 
-                //On supprime et en recrée les créneaux pour avoir des problèmes de nombres de créneaux
-                for (HeuresDebutFin ancienheuresDebutFin : heuresDebutFinDAO.findByIdCreneaux(dto.getId())) { //supprime tout les anciens créneaux
+                //Delete and recreate all the slots to avoid issues with the number of slots existing
+                for (HeuresDebutFin ancienheuresDebutFin : heuresDebutFinDAO.findByIdCreneaux(dto.getId())) { //add every old slot
                     heuresDebutFinDAO.deleteById(ancienheuresDebutFin.getIdPlage());
                 }
 
-                for (HeuresDebutFin heuresDebutFin : dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList())) { //Crée les nouveaux créneaux
+                for (HeuresDebutFin heuresDebutFin : dto.getHeuresDebutFin().stream().map(HeuresDebutFin::new).collect(Collectors.toList())) { //Create all new slot
                     heuresDebutFin.setIdCreneaux(creneaux.getId());
                     HeuresDebutFin save = heuresDebutFinDAO.save(heuresDebutFin);
                     listHeureDebutFin.add(save);
@@ -134,7 +135,7 @@ public class CreneauxController {
 
                 logger.info("le créneau avec l'id " + creneaux.getId().toString() + " a été modifié");
 
-            } catch (EntityNotFoundException e) {
+            } catch (EntityNotFoundException e) { //if slot not found, throw 404 error
                 logger.error("id créneau non trouvé, pour en créer un nouveau, mettre null pour son id");
                 throw new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "entity not found"

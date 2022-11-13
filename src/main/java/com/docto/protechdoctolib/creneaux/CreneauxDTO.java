@@ -33,7 +33,6 @@ public class CreneauxDTO {
         else{
             this.heuresDebutFin= new ArrayList<HeuresDebutFinDTO>();
         }
-        //this.heuresDebutFin=creneaux.getHeuresDebutFin().stream().map(HeuresDebutFinDTO::new).collect(Collectors.toList());
     }
 
     public Long getId() {
