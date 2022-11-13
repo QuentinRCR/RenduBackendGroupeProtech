@@ -24,6 +24,12 @@ public class WebSecurityConfig {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    /**
+     * Désactive la sécurité sur le chemin de API pour que le test d'intégration fonctionne (temporaire)
+     * @param http
+     * @return
+     * @throws Exception
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http

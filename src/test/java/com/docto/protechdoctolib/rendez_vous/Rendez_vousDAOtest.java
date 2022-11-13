@@ -27,7 +27,7 @@ public class Rendez_vousDAOtest {
         Rendez_vous rendez_vous = rendez_vousDAO.getReferenceById(-1L); //rendez_vousDAO.getReferenceById(-2L);
         LocalDateTime dateDebut = LocalDateTime.of(2022, 10, 16, 0, 0, 0);
         Long idUser = Long.valueOf(2);
-        Long idCreneau = Long.valueOf(3);
+        Long idCreneau = Long.valueOf(-1);
         Duration duree = Duration.ofSeconds(4);
         String moyenComm = String.valueOf("zoom");
         String zoomLink = String.valueOf("link.fr");
@@ -85,9 +85,9 @@ public class Rendez_vousDAOtest {
 
     @Test
     public void shouldGetAppointementsWithIDCreneau4(){
-        List<Rendez_vous> listRendezVous = rendez_vousDAO.findAllByIdCreneau(4L);
+        List<Rendez_vous> listRendezVous = rendez_vousDAO.findAllByIdCreneau(-2L);
         Assertions.assertThat(listRendezVous.size()).isEqualTo(2);
-        Assertions.assertThat(listRendezVous.get(0).getIdCreneau()).isEqualTo(4L);
+        Assertions.assertThat(listRendezVous.get(0).getIdCreneau()).isEqualTo(-2L);
     }
 
 

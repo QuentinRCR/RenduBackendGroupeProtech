@@ -13,6 +13,9 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * Permet de tester que la fonction IsWithinASlot fonctionne correctement 
+ */
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 public class IsWithinASlotTest {
@@ -22,31 +25,40 @@ public class IsWithinASlotTest {
     @Autowired
     CreneauxDAO creneauxDAO;
 
+    /**
+     * Test sans que la date de début ou de fin soit sur un bord du créneau
+     */
     @Test
     public void testCenterTimeAndDate(){
         Rendez_vousController rendez_vousController = new Rendez_vousController(creneauxDAO,rendez_vousDAO);
         LocalDateTime heure = LocalDateTime.of(2022,10,11,9,1);
         Duration duree= Duration.ofMinutes(30);
         CreneauxDTO test= rendez_vousController.isWithinASlot(heure,duree, LocalDate.of(2022,8,1));
-        Assertions.assertThat(test.getId()).isEqualTo(2000L);
+        Assertions.assertThat(test.getId()).isEqualTo(-2L);
     }
 
+    /**
+     * Test quand l'heure de début est l'heure du début du créneau
+     */
     @Test
     public void testEdgeTime(){
         Rendez_vousController rendez_vousController = new Rendez_vousController(creneauxDAO,rendez_vousDAO);
         LocalDateTime heure = LocalDateTime.of(2022,10,11,9,0);
         Duration duree= Duration.ofMinutes(30);
         CreneauxDTO test= rendez_vousController.isWithinASlot(heure,duree,LocalDate.of(2022,8,1));
-        Assertions.assertThat(test.getId()).isEqualTo(2000L);
+        Assertions.assertThat(test.getId()).isEqualTo(-2L);
     }
 
+    /**
+     * Test quand la date de début est la date du début du créneau
+     */
     @Test
     public void testEdgeDate(){
         Rendez_vousController rendez_vousController = new Rendez_vousController(creneauxDAO,rendez_vousDAO);
         LocalDateTime heure = LocalDateTime.of(2022,10,10,9,0);
         Duration duree= Duration.ofMinutes(30);
         CreneauxDTO test= rendez_vousController.isWithinASlot(heure,duree,LocalDate.of(2022,8,1));
-        Assertions.assertThat(test.getId()).isEqualTo(2000L);
+        Assertions.assertThat(test.getId()).isEqualTo(-2L);
     }
 
 }

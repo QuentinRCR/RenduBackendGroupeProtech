@@ -1,5 +1,8 @@
 package com.docto.protechdoctolib.creneaux;
 
+/**
+ * Class Used to deserialize Creneau in RESTAPIIntegrationTest
+ */
 public class CreneauDeserialisation {
 
     private Long id;
